@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSA MEMBERS LOUNGE</title>
+<meta name="description" content="MISIA official supporters club MSA MEMBERS LOUNGE リニューアルデモ(ミドル会員向けパーソナライズ)">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --bg-alt:#F5F6F8;
+  --ink:#16181D;
+  --sub:#6E737C;
+  --line:#E5E7EB;
+  --red:#C1122F;
+  --red-soft:#FBEDEF;
+  --sans:"Helvetica Neue",Helvetica,Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic Medium","Yu Gothic",Meiryo,sans-serif;
+  --maxw:1160px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.9;
+  letter-spacing:.02em;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--red);color:#fff}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+
+/* ===== ヘッダー ===== */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  max-width:var(--maxw);margin:0 auto;padding:0 24px;
+  height:64px;display:flex;align-items:center;gap:28px;
+}
+.brand{line-height:1.25}
+.brand .b1{
+  display:block;font-size:16px;font-weight:800;letter-spacing:.16em;
+}
+.brand .b2{
+  display:block;font-size:9px;letter-spacing:.3em;color:var(--red);font-weight:700;
+}
+.nav-links{display:flex;gap:24px;margin-left:auto;align-items:center}
+.nav-links a{
+  font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--ink);
+  padding:4px 0;border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--red);border-color:var(--red)}
+.member-chip{
+  display:flex;align-items:center;gap:10px;
+  border:1px solid var(--line);border-radius:999px;
+  padding:5px 14px 5px 6px;background:#fff;cursor:default;
+}
+.member-chip .avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--ink);color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:11px;letter-spacing:0;
+}
+.member-chip .who{font-size:11px;line-height:1.3;font-weight:700}
+.member-chip .who small{display:block;color:var(--sub);font-size:9.5px;letter-spacing:.06em;font-weight:400}
+
+/* ===== ヒーロー ===== */
+.hero{position:relative;overflow:hidden;background:#8A93A3}
+.hero img{
+  width:100%;height:min(82vh,760px);object-fit:cover;object-position:center 22%;
+  animation:heroIn 2.4s ease-out both;
+}
+@keyframes heroIn{from{transform:scale(1.06);opacity:.4}to{transform:scale(1);opacity:1}}
+.hero .overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(10,12,18,.18) 0%,rgba(10,12,18,0) 30%,rgba(10,12,18,0) 55%,rgba(10,12,18,.5) 100%);
+}
+.hero .hero-copy{
+  position:absolute;left:0;right:0;bottom:0;
+}
+.hero .hero-copy .inner{
+  max-width:var(--maxw);margin:0 auto;padding:0 24px 42px;
+  color:#fff;
+}
+.hero .tag{
+  display:inline-block;background:var(--red);color:#fff;
+  font-size:10px;font-weight:800;letter-spacing:.26em;
+  padding:6px 14px;margin-bottom:14px;
+}
+.hero h1{
+  font-size:clamp(30px,4.6vw,54px);
+  font-weight:800;letter-spacing:.06em;line-height:1.2;
+  text-shadow:0 2px 24px rgba(0,0,0,.35);
+}
+.hero .sub{
+  margin-top:8px;font-size:12px;letter-spacing:.3em;font-weight:700;opacity:.92;
+}
+
+/* ===== ティッカー ===== */
+.ticker{
+  background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;
+  padding:11px 0;border-bottom:1px solid var(--ink);
+}
+.ticker .track{
+  display:inline-flex;gap:0;
+  animation:tick 28s linear infinite;
+}
+.ticker span{
+  font-size:11px;font-weight:700;letter-spacing:.3em;padding-right:56px;
+}
+.ticker b{color:#F2707F;font-weight:700}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== 共通 ===== */
+section{padding:92px 24px}
+.wrap{max-width:var(--maxw);margin:0 auto}
+.sec-head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:12px}
+h2{
+  font-size:clamp(30px,4vw,44px);
+  font-weight:800;letter-spacing:.04em;line-height:1.1;
+  text-transform:uppercase;
+}
+.sec-jp{font-size:12.5px;font-weight:700;color:var(--red);letter-spacing:.2em}
+.lede{color:var(--sub);font-size:14px;max-width:40em;margin-bottom:44px}
+.alt{background:var(--bg-alt)}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 34px;font-size:13px;font-weight:800;letter-spacing:.16em;
+  border:1px solid var(--ink);cursor:pointer;
+  transition:background .2s,color .2s,transform .2s;
+}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:var(--red);border-color:var(--red);transform:translateY(-2px)}
+.btn-outline{background:#fff;color:var(--ink)}
+.btn-outline:hover{border-color:var(--red);color:var(--red);transform:translateY(-2px)}
+
+/* ===== FOR YOU ===== */
+.foryou-head{display:flex;align-items:flex-end;flex-wrap:wrap;gap:18px}
+.persona-chip{
+  margin-left:auto;display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--sub);
+  border:1px solid var(--line);border-radius:999px;padding:7px 16px;background:#fff;
+}
+.persona-chip b{color:var(--red);letter-spacing:.22em}
+.ai-note{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11.5px;color:var(--sub);margin-bottom:40px;
+}
+.ai-note::before{
+  content:"AI";display:inline-grid;place-items:center;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--red);color:#fff;font-size:9px;font-weight:800;letter-spacing:.05em;
+}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.card{
+  background:#fff;border:1px solid var(--line);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.alt .card{border-color:transparent;box-shadow:0 1px 4px rgba(20,24,34,.06)}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(20,24,34,.12)}
+.card .visual{position:relative;overflow:hidden;aspect-ratio:16/9;background:#DDE0E6}
+.card .visual img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.card:hover .visual img{transform:scale(1.05)}
+.card .cat{
+  position:absolute;top:0;left:0;background:var(--ink);color:#fff;
+  font-size:9.5px;font-weight:800;letter-spacing:.24em;padding:6px 14px;
+}
+.card .body{padding:22px 24px 26px}
+.reason{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:700;color:var(--red);
+  background:var(--red-soft);border-radius:999px;padding:4px 12px;
+  margin-bottom:13px;letter-spacing:.04em;
+}
+.reason::before{content:"✦";font-size:10px}
+.card h3{font-size:16.5px;font-weight:800;line-height:1.65;letter-spacing:.03em;margin-bottom:8px}
+.card p{font-size:13px;color:var(--sub);line-height:1.8}
+.card .go{
+  display:inline-block;margin-top:14px;
+  font-size:11px;font-weight:800;letter-spacing:.2em;color:var(--ink);
+  border-bottom:2px solid var(--red);padding-bottom:2px;
+}
+.card .go::after{content:" →";color:var(--red);transition:margin .2s}
+.card:hover .go::after{margin-left:5px}
+
+/* ===== NEWS ===== */
+.news-list{border-top:1px solid var(--line);background:#fff}
+.alt .news-list{border:1px solid var(--line);border-top:1px solid var(--line)}
+.news-item{
+  display:grid;grid-template-columns:120px 90px 1fr auto;gap:20px;align-items:center;
+  padding:22px 26px;border-bottom:1px solid var(--line);
+  transition:background .2s;
+}
+.news-item:hover{background:var(--red-soft)}
+.news-item time{
+  font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.badge{
+  font-size:9.5px;font-weight:800;letter-spacing:.18em;text-align:center;
+  border:1px solid var(--ink);padding:4px 0;color:var(--ink);
+}
+.badge.hot{border-color:var(--red);color:var(--red)}
+.news-item .t{font-size:14px;line-height:1.75}
+.news-item .arrow{color:var(--red);font-weight:800;opacity:0;transition:opacity .2s,transform .2s;transform:translateX(-4px)}
+.news-item:hover .arrow{opacity:1;transform:none}
+.more-link{
+  display:inline-block;margin-top:28px;
+  font-size:11.5px;font-weight:800;letter-spacing:.24em;color:var(--ink);
+  border-bottom:2px solid var(--ink);padding-bottom:3px;transition:color .2s,border-color .2s;
+}
+.more-link:hover{color:var(--red);border-color:var(--red)}
+
+/* ===== LIVE ===== */
+.live-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:54px;align-items:center}
+.live-photo{position:relative;overflow:hidden}
+.live-photo img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.live-photo .pl{
+  position:absolute;top:0;left:0;background:var(--red);color:#fff;
+  font-size:10px;font-weight:800;letter-spacing:.26em;padding:7px 16px;
+}
+.live-label{font-size:11px;font-weight:800;letter-spacing:.3em;color:var(--red);margin-bottom:12px}
+.live-title{
+  font-size:clamp(20px,2.4vw,26px);font-weight:800;letter-spacing:.03em;
+  line-height:1.6;margin-bottom:14px;text-wrap:balance;
+}
+.live-meta{font-size:13.5px;color:var(--sub);line-height:2}
+.live-meta b{color:var(--ink);font-weight:800}
+.countdown{display:flex;gap:12px;margin:24px 0 28px}
+.cd-cell{
+  border:1px solid var(--line);background:#fff;
+  padding:14px 0;width:84px;text-align:center;
+}
+.cd-cell .num{
+  font-size:30px;font-weight:800;line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;
+}
+.cd-cell .unit{font-size:9px;font-weight:700;letter-spacing:.26em;color:var(--sub);margin-top:5px}
+.live-actions{display:flex;gap:14px;flex-wrap:wrap}
+
+/* ===== CONTENTS ===== */
+.hub{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.hub a{
+  position:relative;background:#fff;border:1px solid var(--line);
+  padding:24px 26px;overflow:hidden;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.hub a:hover{transform:translateY(-4px);border-color:var(--red);box-shadow:0 14px 32px rgba(20,24,34,.1)}
+.hub .en{
+  font-size:15px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:4px;
+}
+.hub a:hover .en{color:var(--red)}
+.hub p{font-size:12px;color:var(--sub);line-height:1.75}
+.hub .new-dot{
+  position:absolute;top:20px;right:22px;
+  font-size:9px;font-weight:800;letter-spacing:.2em;color:var(--red);
+}
+.hub .new-dot::before{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--red);margin-right:5px;vertical-align:1px;
+  animation:pulse 1.8s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ===== 会員証 ===== */
+.card-sec{display:grid;grid-template-columns:1fr auto;gap:64px;align-items:center}
+.mcard-wrap{perspective:1200px}
+.mcard{
+  width:430px;max-width:86vw;aspect-ratio:1.586;
+  position:relative;overflow:hidden;border-radius:16px;
+  background:#111319;
+  color:#fff;
+  box-shadow:0 24px 60px rgba(16,18,26,.35);
+  transition:transform .5s ease;
+  transform:rotateY(-7deg) rotateX(2deg);
+}
+.mcard-wrap:hover .mcard{transform:rotateY(0) rotateX(0)}
+.mcard .photo{
+  position:absolute;inset:0;opacity:.5;
+  background-image:url("assets/img/portrait.jpg");
+  background-size:cover;background-position:center 18%;
+  filter:grayscale(35%);
+}
+.mcard .shade{
+  position:absolute;inset:0;
+  background:linear-gradient(115deg,rgba(9,10,14,.94) 34%,rgba(9,10,14,.45) 70%,rgba(9,10,14,.2));
+}
+.mcard .sheen{
+  position:absolute;top:0;left:-90%;width:55%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.16),transparent);
+  transform:skewX(-20deg);
+  animation:sheen 5.5s ease-in-out infinite;
+}
+@keyframes sheen{0%,55%{left:-90%}80%,100%{left:150%}}
+.mcard .inner{position:absolute;inset:0;padding:26px 30px;display:flex;flex-direction:column}
+.mcard .head{display:flex;justify-content:space-between;align-items:flex-start}
+.mcard .club{font-size:15px;font-weight:800;letter-spacing:.2em}
+.mcard .club small{display:block;font-size:8px;letter-spacing:.4em;color:#F2707F;margin-top:4px;font-weight:700}
+.mcard .tier{
+  font-size:9px;font-weight:800;letter-spacing:.22em;color:#fff;
+  background:var(--red);padding:5px 13px;border-radius:999px;
+}
+.mcard .no{
+  margin-top:auto;font-size:21px;font-weight:700;letter-spacing:.32em;
+  font-variant-numeric:tabular-nums;
+}
+.mcard .foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:8px}
+.mcard .name{font-size:15px;font-weight:700;letter-spacing:.12em}
+.mcard .name small{display:block;font-size:8.5px;letter-spacing:.3em;color:rgba(255,255,255,.55);margin-bottom:3px;font-weight:700}
+.mcard .exp{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.12em;text-align:right;font-weight:700}
+.mcard .exp b{display:block;color:#fff;font-size:12.5px;letter-spacing:.18em}
+.status-rows{margin-top:36px;border-top:1px solid var(--line)}
+.status-row{
+  display:flex;justify-content:space-between;gap:20px;
+  padding:15px 4px;border-bottom:1px solid var(--line);font-size:14px;
+}
+.status-row .k{color:var(--sub);font-size:13px}
+.status-row .v{font-weight:700}
+.status-row .v b{color:var(--red);font-weight:800}
+.status-row .v a{color:var(--red);font-size:12px;margin-left:10px;border-bottom:1px solid currentColor;font-weight:700}
+
+/* ===== AIチャット ===== */
+.fab{
+  position:fixed;right:28px;bottom:28px;z-index:60;
+  display:flex;align-items:center;gap:10px;
+  background:var(--ink);color:#fff;border:none;border-radius:999px;
+  padding:15px 26px 15px 20px;font-size:13px;font-weight:800;letter-spacing:.08em;
+  cursor:pointer;box-shadow:0 12px 34px rgba(16,18,26,.35);
+  transition:transform .25s,background .25s;
+}
+.fab:hover{transform:translateY(-3px);background:var(--red)}
+.fab .ico{
+  display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;
+  background:var(--red);font-size:11px;font-weight:800;
+}
+.fab:hover .ico{background:#fff;color:var(--red)}
+.chat{
+  position:fixed;right:28px;bottom:96px;z-index:70;
+  width:390px;max-width:calc(100vw - 40px);height:540px;max-height:70vh;
+  background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(16,18,26,.3);
+  display:flex;flex-direction:column;
+  opacity:0;transform:translateY(22px) scale(.98);pointer-events:none;
+  transition:opacity .3s ease,transform .3s ease;
+}
+.chat.open{opacity:1;transform:none;pointer-events:auto}
+.chat-head{
+  padding:16px 20px;display:flex;align-items:center;gap:12px;
+  background:var(--ink);color:#fff;
+}
+.chat-head .orb{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--red);display:grid;place-items:center;
+  font-size:12px;font-weight:800;color:#fff;
+}
+.chat-head .tt{line-height:1.35}
+.chat-head .tt b{font-size:14px;letter-spacing:.06em}
+.chat-head .tt small{display:block;font-size:9.5px;color:rgba(255,255,255,.6);letter-spacing:.1em}
+.chat-head .beta{
+  margin-left:auto;font-size:8.5px;font-weight:800;letter-spacing:.2em;color:#F2707F;
+  border:1px solid rgba(242,112,127,.6);border-radius:4px;padding:3px 8px;
+}
+.chat-close{
+  background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;
+  margin-left:4px;padding:4px;line-height:1;
+}
+.chat-close:hover{color:#fff}
+.chat-log{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;background:var(--bg-alt)}
+.msg{max-width:84%;padding:11px 15px;border-radius:14px;font-size:13px;line-height:1.75;
+  animation:msgIn .3s ease both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg.bot{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.user{background:var(--ink);color:#fff;border-bottom-right-radius:4px;align-self:flex-end;font-weight:700}
+.typing{display:inline-flex;gap:5px;padding:13px 16px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--sub);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}
+.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.quick{padding:10px 16px 4px;display:flex;flex-wrap:wrap;gap:8px;background:#fff;border-top:1px solid var(--line)}
+.quick button{
+  font-size:11px;font-weight:700;color:var(--red);
+  background:var(--red-soft);border:1px solid rgba(193,18,47,.25);
+  border-radius:999px;padding:6px 13px;cursor:pointer;transition:background .2s;
+}
+.quick button:hover{background:#F6D5DB}
+.chat-input{display:flex;gap:10px;padding:12px 14px;background:#fff}
+.chat-input input{
+  flex:1;background:var(--bg-alt);border:1px solid var(--line);border-radius:999px;
+  padding:10px 18px;color:var(--ink);font-size:13px;font-family:inherit;outline:none;
+}
+.chat-input input:focus{border-color:var(--red)}
+.chat-input button{
+  background:var(--red);border:none;border-radius:50%;width:40px;height:40px;
+  color:#fff;font-size:15px;cursor:pointer;flex:none;font-weight:800;
+}
+.chat-note{font-size:9px;color:var(--sub);text-align:center;padding:0 16px 10px;background:#fff}
+
+/* ===== フッター ===== */
+footer{
+  background:var(--ink);color:#fff;
+  padding:56px 24px 40px;text-align:center;
+}
+.foot-logo{font-size:15px;font-weight:800;letter-spacing:.2em;margin-bottom:6px}
+.foot-logo small{display:block;font-size:8.5px;letter-spacing:.34em;color:#F2707F;font-weight:700;margin-top:4px}
+.foot-links{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin:26px 0 20px}
+.foot-links a{font-size:11.5px;color:rgba(255,255,255,.7);letter-spacing:.08em;transition:color .2s}
+.foot-links a:hover{color:#fff}
+.copyright{font-size:10.5px;color:rgba(255,255,255,.5);letter-spacing:.1em}
+.demo-note{font-size:9.5px;color:rgba(255,255,255,.35);margin-top:12px}
+
+/* ===== レスポンシブ ===== */
+@media (max-width:980px){
+  .cards{grid-template-columns:1fr 1fr}
+  .hub{grid-template-columns:1fr 1fr}
+  .live-grid{grid-template-columns:1fr;gap:34px}
+  .card-sec{grid-template-columns:1fr;gap:44px}
+  .nav-links a:not(.keep){display:none}
+}
+@media (max-width:640px){
+  section{padding:64px 20px}
+  .cards,.hub{grid-template-columns:1fr}
+  .news-item{grid-template-columns:92px 1fr;grid-template-rows:auto auto;padding:18px 16px}
+  .news-item .badge{display:none}
+  .news-item .arrow{display:none}
+  .news-item .t{grid-column:1/-1}
+  .cd-cell{width:74px}
+  .member-chip .who{display:none}
+  .fab span.label{display:none}
+  .fab{padding:16px}
+  .hero img{height:60vh}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+  .ticker .track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="メインナビゲーション">
+    <a href="#top" class="brand">
+      <span class="b1">MSA MEMBERS LOUNGE</span>
+      <span class="b2">MISIA OFFICIAL SUPPORTERS CLUB</span>
+    </a>
+    <div class="nav-links">
+      <a href="#foryou">FOR YOU</a>
+      <a href="#news">NEWS</a>
+      <a href="#live">LIVE</a>
+      <a href="#contents">CONTENTS</a>
+      <a href="#membership" class="keep">MYPAGE</a>
+    </div>
+    <div class="member-chip" title="ログイン中">
+      <span class="avatar">T</span>
+      <span class="who">test さん<small>No.00000000 · 年会員</small></span>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ヒーロー -->
+  <div class="hero">
+    <img src="assets/img/hero.jpg" alt="MISIA アーティスト写真" fetchpriority="high">
+    <div class="overlay" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <div class="inner">
+        <span class="tag">MEMBERS ONLY</span>
+        <h1>MSA MEMBERS LOUNGE</h1>
+        <p class="sub">MISIA OFFICIAL SUPPORTERS CLUB</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ティッカー -->
+  <div class="ticker" aria-hidden="true">
+    <div class="track">
+      <span>MSA MEMBERS LOUNGE <b>—</b> MISIA OFFICIAL SUPPORTERS CLUB <b>—</b> 2027 ARENA TOUR「BEYOND FREEDOM」開催決定 <b>—</b> 星空のライヴXIII GRAND HORIZON 開催中 <b>—</b></span>
+      <span>MSA MEMBERS LOUNGE <b>—</b> MISIA OFFICIAL SUPPORTERS CLUB <b>—</b> 2027 ARENA TOUR「BEYOND FREEDOM」開催決定 <b>—</b> 星空のライヴXIII GRAND HORIZON 開催中 <b>—</b></span>
+    </div>
+  </div>
+
+  <!-- FOR YOU -->
+  <section id="foryou">
+    <div class="wrap">
+      <div class="foryou-head reveal">
+        <div class="sec-head">
+          <h2>For You</h2>
+          <span class="sec-jp">あなたへのおすすめ</span>
+        </div>
+        <span class="persona-chip">あなたの楽しみ方タイプ:<b>MIDDLE</b></span>
+      </div>
+      <p class="ai-note reveal">閲覧履歴と会員情報をもとに、AIが今のあなたに合わせて3つ選びました。</p>
+      <div class="cards">
+        <article class="card reveal">
+          <div class="visual">
+            <img src="assets/img/live.jpg" alt="MISIA ライブステージ" loading="lazy">
+            <span class="cat">LIVE</span>
+          </div>
+          <div class="body">
+            <span class="reason">ライブ情報をよくご覧のあなたへ</span>
+            <h3>2027年全国アリーナツアー開催決定</h3>
+            <p>「STARTS presents MISIA BIGVOICE BAND ORCHESTRA 2027 BEYOND FREEDOM」。会員最速先行の受付スケジュールをいち早くお知らせします。</p>
+            <a class="go" href="#live">詳しく見る</a>
+          </div>
+        </article>
+        <article class="card reveal">
+          <div class="visual">
+            <img src="assets/img/mag.jpg" alt="MISIA MAG 最新号ビジュアル" loading="lazy">
+            <span class="cat">MISIA MAG</span>
+          </div>
+          <div class="body">
+            <span class="reason">前号を最後まで読了されています</span>
+            <h3>MISIA MAG VOL.96 公開中</h3>
+            <p>会員限定デジタルマガジン最新号。15thアルバム「LOVE NEVER DIES」の制作舞台裏とロングインタビューを収録。</p>
+            <a class="go" href="#contents">VOL.96を読む</a>
+          </div>
+        </article>
+        <article class="card reveal">
+          <div class="visual">
+            <img src="assets/img/voice.jpg" alt="MISIA ポートレート" loading="lazy">
+            <span class="cat">MISIA VOICE</span>
+          </div>
+          <div class="body">
+            <span class="reason">3週間ぶりの更新です</span>
+            <h3>MISIA VOICE — 「皆さんへ」</h3>
+            <p>MISIA本人から会員のみなさまへ届いたメッセージ。CANDLE NIGHT 2025を終えての想いが綴られています。</p>
+            <a class="go" href="#contents">メッセージを読む</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section id="news" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>News</h2>
+        <span class="sec-jp">最新ニュース</span>
+      </div>
+      <p class="lede reveal">MSAからのお知らせ。未読のニュースを新しい順に表示しています。</p>
+      <div class="news-list reveal">
+        <a class="news-item" href="#">
+          <time>2026.07.07</time>
+          <span class="badge hot">TOUR</span>
+          <span class="t">2027年全国アリーナツアー「STARTS presents MISIA BIGVOICE BAND ORCHESTRA 2027 BEYOND FREEDOM」開催決定!</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="news-item" href="#">
+          <time>2026.07.07</time>
+          <span class="badge">UPDATE</span>
+          <span class="t">「DIARY」更新!MSA STAFFがツアーリハーサルの様子をお届け</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="news-item" href="#">
+          <time>2026.07.06</time>
+          <span class="badge">GOODS</span>
+          <span class="t">「STARTS presents MISIA 星空のライヴXIII GRAND HORIZON」オフィシャルグッズ東京公演受取販売のご案内</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="news-item" href="#">
+          <time>2026.07.05</time>
+          <span class="badge">GOODS</span>
+          <span class="t">MISIA Birthdayを記念したBRIGITTE TANAKAコラボレーションアイテムが登場!</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="news-item" href="#">
+          <time>2026.07.03</time>
+          <span class="badge">PROJECT</span>
+          <span class="t">「星空に願いをプロジェクト for 国立成育医療研究センター with MSA」七夕企画を実施!</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+      <a class="more-link reveal" href="#">VIEW ALL</a>
+    </div>
+  </section>
+
+  <!-- LIVE -->
+  <section id="live">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Live &amp; Event</h2>
+        <span class="sec-jp">ライブ・イベント</span>
+      </div>
+      <p class="lede reveal">あなたの地域と参加履歴から、いちばん近い公演をお知らせします。</p>
+      <div class="live-grid reveal">
+        <div class="live-photo">
+          <img src="assets/img/live.jpg" alt="MISIA 星空のライヴ ステージ写真" loading="lazy">
+          <span class="pl">NEXT LIVE</span>
+        </div>
+        <div>
+          <p class="live-label">東京公演</p>
+          <p class="live-title">STARTS presents MISIA<br>星空のライヴXIII GRAND HORIZON</p>
+          <p class="live-meta">
+            <b>2026.7.25 (土) 開場 17:00 / 開演 18:00</b><br>
+            東京・有明アリーナ<br>
+            オフィシャルグッズは公演受取販売を実施中
+          </p>
+          <div class="countdown" aria-label="公演までのカウントダウン">
+            <div class="cd-cell"><div class="num" id="cd-d">—</div><div class="unit">DAYS</div></div>
+            <div class="cd-cell"><div class="num" id="cd-h">—</div><div class="unit">HOURS</div></div>
+            <div class="cd-cell"><div class="num" id="cd-m">—</div><div class="unit">MIN</div></div>
+          </div>
+          <div class="live-actions">
+            <a class="btn btn-primary" href="#">チケット情報</a>
+            <a class="btn btn-outline" href="#">グッズ受取販売</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENTS -->
+  <section id="contents" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Contents</h2>
+        <span class="sec-jp">会員限定コンテンツ</span>
+      </div>
+      <p class="lede reveal">MSA会員だけが楽しめるコンテンツライブラリー。<span style="color:var(--red);font-weight:700">●</span> は新着があるコーナーです。</p>
+      <div class="hub reveal">
+        <a href="#">
+          <p class="en">MISIA VOICE</p>
+          <p>MISIA本人から届くメッセージ。最新は「皆さんへ」。</p>
+          <span class="new-dot">NEW</span>
+        </a>
+        <a href="#">
+          <p class="en">DIARY</p>
+          <p>MISIAとMSA STAFFが綴る日々の記録。本日更新されました。</p>
+          <span class="new-dot">NEW</span>
+        </a>
+        <a href="#">
+          <p class="en">MISIA MAG</p>
+          <p>会員限定デジタルマガジン。最新号VOL.96まで全号読み放題。</p>
+          <span class="new-dot">NEW</span>
+        </a>
+        <a href="#">
+          <p class="en">INTERVIEW / REPORT</p>
+          <p>ライブレポートや制作の裏側に迫るロングインタビュー。</p>
+        </a>
+        <a href="#">
+          <p class="en">おしえて!MISIA</p>
+          <p>会員の質問にMISIAが答えるQ&amp;Aコーナー。質問も随時受付中。</p>
+        </a>
+        <a href="#">
+          <p class="en">DOWNLOAD</p>
+          <p>毎月更新のMSAカレンダー壁紙。2026年7月版を配信中。</p>
+        </a>
+        <a href="#">
+          <p class="en">MESSAGE</p>
+          <p>MISIAへのメッセージやエピソードを送れる投稿フォーム。</p>
+        </a>
+        <a href="#">
+          <p class="en">STORE</p>
+          <p>オフィシャルグッズストア。会員限定アイテムも。</p>
+        </a>
+        <a href="#">
+          <p class="en">FAQ</p>
+          <p>入会・継続・チケットなど、よくある質問はこちら。</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 会員証 -->
+  <section id="membership">
+    <div class="wrap card-sec">
+      <div class="reveal">
+        <div class="sec-head">
+          <h2>Membership</h2>
+          <span class="sec-jp">デジタル会員証</span>
+        </div>
+        <p class="lede" style="margin-bottom:0">
+          コンサート会場での本人確認やキャンペーン応募に使えるデジタル会員証。
+          スマートフォンでもこのまま提示できます。
+        </p>
+        <div class="status-rows">
+          <div class="status-row"><span class="k">年会員ステータス</span><span class="v"><b>継続中</b></span></div>
+          <div class="status-row"><span class="k">年会員 有効期限</span><span class="v">2027年6月30日</span></div>
+          <div class="status-row"><span class="k">年会員自動継続</span><span class="v">設定なし<a href="#">設定する</a></span></div>
+          <div class="status-row"><span class="k">月会員</span><span class="v">未入会<a href="#">入会する</a></span></div>
+        </div>
+      </div>
+      <div class="mcard-wrap reveal">
+        <div class="mcard" role="img" aria-label="デジタル会員証 test 会員番号00000000">
+          <div class="photo"></div>
+          <div class="shade"></div>
+          <div class="sheen"></div>
+          <div class="inner">
+            <div class="head">
+              <div class="club">MSA<small>MEMBERS LOUNGE</small></div>
+              <div class="tier">年会員 · REGULAR</div>
+            </div>
+            <div class="no">0000 0000</div>
+            <div class="foot">
+              <div class="name"><small>MEMBER</small>test</div>
+              <div class="exp">VALID THRU<b>2027.06.30</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- AIコンシェルジュ -->
+<button class="fab" id="fab" aria-expanded="false" aria-controls="chat">
+  <span class="ico">AI</span><span class="label">AIコンシェルジュに聞く</span>
+</button>
+
+<div class="chat" id="chat" role="dialog" aria-label="MSA AIコンシェルジュ" aria-hidden="true">
+  <div class="chat-head">
+    <div class="orb">AI</div>
+    <div class="tt"><b>MSA AIコンシェルジュ</b><small>あなた専属のご案内係</small></div>
+    <span class="beta">BETA</span>
+    <button class="chat-close" id="chat-close" aria-label="チャットを閉じる">×</button>
+  </div>
+  <div class="chat-log" id="chat-log"></div>
+  <div class="quick" id="quick"></div>
+  <div class="chat-input">
+    <input type="text" id="chat-text" placeholder="質問を入力してください…" aria-label="質問を入力">
+    <button id="chat-send" aria-label="送信">↑</button>
+  </div>
+  <p class="chat-note">※ β版のため、回答内容はサンプルです。正確な情報はFAQ・CONTACTをご確認ください。</p>
+</div>
+
+<footer>
+  <p class="foot-logo">MSA MEMBERS LOUNGE<small>MISIA OFFICIAL SUPPORTERS CLUB</small></p>
+  <div class="foot-links">
+    <a href="#">会員規約</a>
+    <a href="#">プライバシーポリシー</a>
+    <a href="#">特定商取引法に基づく表記</a>
+    <a href="#">FAQ</a>
+    <a href="#">CONTACT</a>
+  </div>
+  <p class="copyright">Rhythmedia Group. Copyright Rhythmedia all rights reserved.</p>
+  <p class="demo-note">本ページはリニューアル提案用のデモです。日付・一部コンテンツはサンプルデータを含みます。</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- スクロール出現 ---- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+
+  /* ---- カウントダウン (東京公演 2026.7.25 18:00) ---- */
+  var target = new Date("2026-07-25T18:00:00+09:00").getTime();
+  function pad(n){ return n < 10 ? "0" + n : "" + n; }
+  function tick(){
+    var diff = Math.max(0, target - Date.now());
+    var d = Math.floor(diff / 86400000);
+    var hh = Math.floor(diff % 86400000 / 3600000);
+    var mm = Math.floor(diff % 3600000 / 60000);
+    document.getElementById("cd-d").textContent = d;
+    document.getElementById("cd-h").textContent = pad(hh);
+    document.getElementById("cd-m").textContent = pad(mm);
+  }
+  tick();
+  setInterval(tick, 30000);
+
+  /* ---- AIコンシェルジュ (デモ・スクリプト応答) ---- */
+  var fab = document.getElementById("fab");
+  var chat = document.getElementById("chat");
+  var log = document.getElementById("chat-log");
+  var quick = document.getElementById("quick");
+  var input = document.getElementById("chat-text");
+  var sendBtn = document.getElementById("chat-send");
+  var opened = false;
+
+  var faqs = [
+    { q: "次のライブはいつ?", a: "次の公演は「星空のライヴXIII GRAND HORIZON」東京公演、2026年7月25日(土) 有明アリーナです。開演は18:00。年会員資格でグッズの公演受取販売もご利用いただけます。" },
+    { q: "会員の継続方法は?", a: "年会員の有効期限は2027年6月30日です。期限の約2ヶ月前にご案内メールが届きます。マイページの「自動継続設定」をオンにしておくと、更新手続きなしで継続できますよ。" },
+    { q: "今月のおすすめは?", a: "MISIA MAGをよく読まれているので、最新のVOL.96がおすすめです。あわせてDOWNLOADコーナーの「MSAカレンダー2026年7月」壁紙も公開されました。" },
+    { q: "壁紙はどこ?", a: "DOWNLOADコーナーから毎月のMSAカレンダー壁紙を配布しています。3サイズからお選びいただけます。CONTENTSの「DOWNLOAD」からどうぞ。" }
+  ];
+  var fallback = "ありがとうございます。こちらはβ版のため、お答えできる内容を準備中です…!お急ぎのご用件はFAQ、またはCONTACTからお問い合わせください。";
+
+  function addMsg(text, who){
+    var el = document.createElement("div");
+    el.className = "msg " + who;
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+  function botReply(text){
+    var typing = document.createElement("div");
+    typing.className = "msg bot typing";
+    typing.innerHTML = "<i></i><i></i><i></i>";
+    log.appendChild(typing);
+    log.scrollTop = log.scrollHeight;
+    setTimeout(function(){
+      typing.remove();
+      addMsg(text, "bot");
+    }, 900 + Math.random() * 600);
+  }
+  function ask(q){
+    addMsg(q, "user");
+    var hit = null;
+    for (var i = 0; i < faqs.length; i++){
+      if (q.indexOf(faqs[i].q.slice(0, 4)) !== -1 || faqs[i].q === q){ hit = faqs[i]; break; }
+    }
+    botReply(hit ? hit.a : fallback);
+  }
+  function openChat(){
+    chat.classList.add("open");
+    chat.setAttribute("aria-hidden", "false");
+    fab.setAttribute("aria-expanded", "true");
+    if (!opened){
+      opened = true;
+      setTimeout(function(){
+        botReply("こんにちは、testさん。MSA AIコンシェルジュです。ライブ・会員情報・コンテンツのことなら何でも聞いてください。");
+      }, 250);
+      faqs.forEach(function(f){
+        var b = document.createElement("button");
+        b.textContent = f.q;
+        b.addEventListener("click", function(){ ask(f.q); });
+        quick.appendChild(b);
+      });
+    }
+    input.focus();
+  }
+  function closeChat(){
+    chat.classList.remove("open");
+    chat.setAttribute("aria-hidden", "true");
+    fab.setAttribute("aria-expanded", "false");
+  }
+  fab.addEventListener("click", function(){
+    chat.classList.contains("open") ? closeChat() : openChat();
+  });
+  document.getElementById("chat-close").addEventListener("click", closeChat);
+  function sendInput(){
+    var v = input.value.trim();
+    if (!v) return;
+    input.value = "";
+    ask(v);
+  }
+  sendBtn.addEventListener("click", sendInput);
+  input.addEventListener("keydown", function(e){ if (e.key === "Enter") sendInput(); });
+})();
+</script>
+</body>
+</html>
