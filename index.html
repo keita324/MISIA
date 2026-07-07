@@ -422,6 +422,109 @@ footer{
 .copyright{font-size:10.5px;color:rgba(255,255,255,.5);letter-spacing:.1em}
 .demo-note{font-size:9.5px;color:rgba(255,255,255,.35);margin-top:12px}
 
+/* ===== サブページ ===== */
+#page{min-height:60vh}
+.page-hero{background:var(--bg-alt);border-bottom:1px solid var(--line);padding:46px 24px 42px}
+.page-hero .pwrap{max-width:920px;margin:0 auto}
+.breadcrumb{font-size:11px;color:var(--sub);letter-spacing:.08em;margin-bottom:14px}
+.breadcrumb a{color:var(--red);font-weight:700}
+.page-hero h2{margin-bottom:2px}
+.page-hero .sec-jp{display:block;margin-top:6px}
+.page-body{max-width:920px;margin:0 auto;padding:52px 24px 90px}
+.page-body h4{font-size:16px;font-weight:800;letter-spacing:.04em;margin:38px 0 12px;padding-left:12px;border-left:4px solid var(--red)}
+.page-body p{font-size:14px;margin-bottom:1.3em}
+.page-body ul{font-size:13.5px;color:var(--sub);padding-left:1.4em;margin-bottom:1.4em}
+.page-body ul li{margin-bottom:.4em}
+.art-meta{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.art-meta time{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--sub)}
+.art-photo{margin:0 0 34px}
+.art-photo img{width:100%;aspect-ratio:16/7;object-fit:cover}
+.dtable{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0 26px}
+.dtable th,.dtable td{border:1px solid var(--line);padding:11px 16px;text-align:left;vertical-align:top}
+.dtable th{background:var(--bg-alt);font-weight:800;white-space:nowrap;width:180px}
+.dtable td{font-variant-numeric:tabular-nums}
+.qa{border:1px solid var(--line);background:#fff;margin-bottom:10px}
+.qa summary{
+  cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:12px;
+  padding:16px 20px;font-size:14px;font-weight:700;line-height:1.7;
+}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::before{content:"Q";color:var(--red);font-weight:800;font-size:15px;flex:none}
+.qa summary::after{content:"+";margin-left:auto;color:var(--sub);font-weight:400;font-size:18px;flex:none}
+.qa[open] summary::after{content:"−"}
+.qa .a{display:flex;gap:12px;padding:0 20px 18px;font-size:13.5px;color:var(--sub);line-height:1.9}
+.qa .a::before{content:"A";color:var(--ink);font-weight:800;font-size:15px;flex:none}
+.tag-mini{
+  display:inline-block;font-size:9px;font-weight:800;letter-spacing:.14em;
+  border:1px solid var(--red);color:var(--red);padding:2px 8px;margin-left:8px;vertical-align:2px;white-space:nowrap;
+}
+.entry-list{border-top:1px solid var(--line)}
+.entry{display:grid;grid-template-columns:110px 96px 1fr;gap:18px;align-items:center;
+  padding:18px 8px;border-bottom:1px solid var(--line);font-size:14px;transition:background .2s}
+.entry:hover{background:var(--red-soft)}
+.entry time{font-size:12.5px;font-weight:700;color:var(--sub);font-variant-numeric:tabular-nums}
+.entry .by{font-size:9.5px;font-weight:800;letter-spacing:.12em;text-align:center;padding:3px 0;border:1px solid var(--ink)}
+.entry .by.misia{background:var(--ink);color:#fff}
+.mag-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px}
+.mag-tile{
+  aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:16px;background:linear-gradient(155deg,#2A2E39,#14161C);color:#fff;
+  border:1px solid var(--line);transition:transform .25s,box-shadow .25s;
+}
+.mag-tile:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,24,34,.18)}
+.mag-tile .vol{font-size:20px;font-weight:800;letter-spacing:.06em}
+.mag-tile .d{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.12em;margin-top:2px}
+.mag-tile.latest{background:linear-gradient(155deg,var(--red),#7A0C1F)}
+.dl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.dl-item{border:1px solid var(--line);background:#fff;padding:22px 24px}
+.dl-item h5{font-size:14.5px;font-weight:800;margin-bottom:4px}
+.dl-item .lim{font-size:9.5px;font-weight:800;letter-spacing:.1em;color:var(--red)}
+.dl-sizes{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.dl-sizes button{
+  font-size:11px;font-weight:700;border:1px solid var(--ink);background:#fff;
+  padding:7px 14px;cursor:pointer;letter-spacing:.06em;transition:background .2s,color .2s;
+}
+.dl-sizes button:hover{background:var(--ink);color:#fff}
+.goods-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.goods{border:1px solid var(--line);background:#fff;padding:22px 24px;display:flex;flex-direction:column;gap:4px}
+.goods .gname{font-size:14.5px;font-weight:800}
+.goods .gprice{font-size:13.5px;color:var(--red);font-weight:800;font-variant-numeric:tabular-nums}
+.goods .gnote{font-size:12px;color:var(--sub)}
+.form-row{margin-bottom:22px}
+.form-row label{display:block;font-size:13px;font-weight:800;margin-bottom:8px}
+.form-row label .req{font-size:9px;font-weight:800;color:#fff;background:var(--red);padding:2px 7px;margin-left:8px;letter-spacing:.1em;vertical-align:2px}
+.form-row input[type=text],.form-row select,.form-row textarea{
+  width:100%;border:1px solid var(--line);background:#fff;padding:12px 16px;
+  font-size:14px;font-family:inherit;color:var(--ink);outline:none;
+}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--red)}
+.form-row textarea{min-height:140px;resize:vertical}
+.form-row .radio{display:inline-flex;align-items:center;gap:7px;margin-right:22px;font-size:14px;cursor:pointer}
+.notice{background:var(--bg-alt);border:1px solid var(--line);padding:18px 22px;font-size:12.5px;color:var(--sub);margin:26px 0}
+.notice b{color:var(--ink)}
+.step{display:flex;gap:16px;margin-bottom:18px;align-items:flex-start}
+.step .n{
+  flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;
+  display:grid;place-items:center;font-size:13px;font-weight:800;
+}
+.step .t b{display:block;font-size:14.5px;margin-bottom:2px}
+.step .t p{font-size:13px;color:var(--sub);margin:0}
+.mypage-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px}
+.mypage-actions a{
+  border:1px solid var(--ink);padding:16px 20px;font-size:13.5px;font-weight:800;
+  letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;
+  transition:background .2s,color .2s;
+}
+.mypage-actions a::after{content:"→";color:var(--red)}
+.mypage-actions a:hover{background:var(--ink);color:#fff}
+.legal p{font-size:13px;color:var(--sub)}
+.legal h4{margin-top:30px}
+.back-row{max-width:920px;margin:0 auto;padding:0 24px 80px}
+.dummy-note{
+  display:inline-block;background:var(--red-soft);color:var(--red);
+  font-size:10.5px;font-weight:700;padding:5px 12px;margin-bottom:24px;letter-spacing:.06em;
+}
+
 /* ===== レスポンシブ ===== */
 @media (max-width:980px){
   .cards{grid-template-columns:1fr 1fr}
@@ -442,6 +545,11 @@ footer{
   .fab span.label{display:none}
   .fab{padding:16px}
   .hero img{height:60vh}
+  .mag-grid{grid-template-columns:repeat(2,1fr)}
+  .dl-grid,.goods-grid,.mypage-actions{grid-template-columns:1fr}
+  .entry{grid-template-columns:96px 1fr;grid-template-rows:auto auto}
+  .entry .t{grid-column:1/-1}
+  .dtable th{width:auto}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
@@ -517,7 +625,7 @@ footer{
             <span class="reason">ライブ情報をよくご覧のあなたへ</span>
             <h3>2027年全国アリーナツアー開催決定</h3>
             <p>「STARTS presents MISIA BIGVOICE BAND ORCHESTRA 2027 BEYOND FREEDOM」。会員最速先行の受付スケジュールをいち早くお知らせします。</p>
-            <a class="go" href="#live">詳しく見る</a>
+            <a class="go" href="#/news/1">詳しく見る</a>
           </div>
         </article>
         <article class="card reveal">
@@ -529,7 +637,7 @@ footer{
             <span class="reason">前号を最後まで読了されています</span>
             <h3>MISIA MAG VOL.96 公開中</h3>
             <p>会員限定デジタルマガジン最新号。15thアルバム「LOVE NEVER DIES」の制作舞台裏とロングインタビューを収録。</p>
-            <a class="go" href="#contents">VOL.96を読む</a>
+            <a class="go" href="#/mag">VOL.96を読む</a>
           </div>
         </article>
         <article class="card reveal">
@@ -541,7 +649,7 @@ footer{
             <span class="reason">3週間ぶりの更新です</span>
             <h3>MISIA VOICE — 「皆さんへ」</h3>
             <p>MISIA本人から会員のみなさまへ届いたメッセージ。CANDLE NIGHT 2025を終えての想いが綴られています。</p>
-            <a class="go" href="#contents">メッセージを読む</a>
+            <a class="go" href="#/voice">メッセージを読む</a>
           </div>
         </article>
       </div>
@@ -557,38 +665,38 @@ footer{
       </div>
       <p class="lede reveal">MSAからのお知らせ。未読のニュースを新しい順に表示しています。</p>
       <div class="news-list reveal">
-        <a class="news-item" href="#">
+        <a class="news-item" href="#/news/1">
           <time>2026.07.07</time>
           <span class="badge hot">TOUR</span>
           <span class="t">2027年全国アリーナツアー「STARTS presents MISIA BIGVOICE BAND ORCHESTRA 2027 BEYOND FREEDOM」開催決定!</span>
           <span class="arrow">→</span>
         </a>
-        <a class="news-item" href="#">
+        <a class="news-item" href="#/news/2">
           <time>2026.07.07</time>
           <span class="badge">UPDATE</span>
           <span class="t">「DIARY」更新!MSA STAFFがツアーリハーサルの様子をお届け</span>
           <span class="arrow">→</span>
         </a>
-        <a class="news-item" href="#">
+        <a class="news-item" href="#/news/3">
           <time>2026.07.06</time>
           <span class="badge">GOODS</span>
           <span class="t">「STARTS presents MISIA 星空のライヴXIII GRAND HORIZON」オフィシャルグッズ東京公演受取販売のご案内</span>
           <span class="arrow">→</span>
         </a>
-        <a class="news-item" href="#">
+        <a class="news-item" href="#/news/4">
           <time>2026.07.05</time>
           <span class="badge">GOODS</span>
           <span class="t">MISIA Birthdayを記念したBRIGITTE TANAKAコラボレーションアイテムが登場!</span>
           <span class="arrow">→</span>
         </a>
-        <a class="news-item" href="#">
+        <a class="news-item" href="#/news/5">
           <time>2026.07.03</time>
           <span class="badge">PROJECT</span>
           <span class="t">「星空に願いをプロジェクト for 国立成育医療研究センター with MSA」七夕企画を実施!</span>
           <span class="arrow">→</span>
         </a>
       </div>
-      <a class="more-link reveal" href="#">VIEW ALL</a>
+      <a class="more-link reveal" href="#/news">VIEW ALL</a>
     </div>
   </section>
 
@@ -619,8 +727,8 @@ footer{
             <div class="cd-cell"><div class="num" id="cd-m">—</div><div class="unit">MIN</div></div>
           </div>
           <div class="live-actions">
-            <a class="btn btn-primary" href="#">チケット情報</a>
-            <a class="btn btn-outline" href="#">グッズ受取販売</a>
+            <a class="btn btn-primary" href="#/ticket">チケット情報</a>
+            <a class="btn btn-outline" href="#/goods">グッズ受取販売</a>
           </div>
         </div>
       </div>
@@ -636,42 +744,42 @@ footer{
       </div>
       <p class="lede reveal">MSA会員だけが楽しめるコンテンツライブラリー。<span style="color:var(--red);font-weight:700">●</span> は新着があるコーナーです。</p>
       <div class="hub reveal">
-        <a href="#">
+        <a href="#/voice">
           <p class="en">MISIA VOICE</p>
           <p>MISIA本人から届くメッセージ。最新は「皆さんへ」。</p>
           <span class="new-dot">NEW</span>
         </a>
-        <a href="#">
+        <a href="#/diary">
           <p class="en">DIARY</p>
           <p>MISIAとMSA STAFFが綴る日々の記録。本日更新されました。</p>
           <span class="new-dot">NEW</span>
         </a>
-        <a href="#">
+        <a href="#/mag">
           <p class="en">MISIA MAG</p>
           <p>会員限定デジタルマガジン。最新号VOL.96まで全号読み放題。</p>
           <span class="new-dot">NEW</span>
         </a>
-        <a href="#">
+        <a href="#/interview">
           <p class="en">INTERVIEW / REPORT</p>
           <p>ライブレポートや制作の裏側に迫るロングインタビュー。</p>
         </a>
-        <a href="#">
+        <a href="#/oshiete">
           <p class="en">おしえて!MISIA</p>
           <p>会員の質問にMISIAが答えるQ&amp;Aコーナー。質問も随時受付中。</p>
         </a>
-        <a href="#">
+        <a href="#/download">
           <p class="en">DOWNLOAD</p>
           <p>毎月更新のMSAカレンダー壁紙。2026年7月版を配信中。</p>
         </a>
-        <a href="#">
+        <a href="#/message">
           <p class="en">MESSAGE</p>
           <p>MISIAへのメッセージやエピソードを送れる投稿フォーム。</p>
         </a>
-        <a href="#">
+        <a href="#/store">
           <p class="en">STORE</p>
           <p>オフィシャルグッズストア。会員限定アイテムも。</p>
         </a>
-        <a href="#">
+        <a href="#/faq">
           <p class="en">FAQ</p>
           <p>入会・継続・チケットなど、よくある質問はこちら。</p>
         </a>
@@ -694,8 +802,8 @@ footer{
         <div class="status-rows">
           <div class="status-row"><span class="k">年会員ステータス</span><span class="v"><b>継続中</b></span></div>
           <div class="status-row"><span class="k">年会員 有効期限</span><span class="v">2027年6月30日</span></div>
-          <div class="status-row"><span class="k">年会員自動継続</span><span class="v">設定なし<a href="#">設定する</a></span></div>
-          <div class="status-row"><span class="k">月会員</span><span class="v">未入会<a href="#">入会する</a></span></div>
+          <div class="status-row"><span class="k">年会員自動継続</span><span class="v">設定なし<a href="#/mypage">設定する</a></span></div>
+          <div class="status-row"><span class="k">月会員</span><span class="v">未入会<a href="#/mypage">入会する</a></span></div>
         </div>
       </div>
       <div class="mcard-wrap reveal">
@@ -721,6 +829,8 @@ footer{
 
 </main>
 
+<div id="page" hidden></div>
+
 <!-- AIコンシェルジュ -->
 <button class="fab" id="fab" aria-expanded="false" aria-controls="chat">
   <span class="ico">AI</span><span class="label">AIコンシェルジュに聞く</span>
@@ -745,11 +855,11 @@ footer{
 <footer>
   <p class="foot-logo">MSA MEMBERS LOUNGE<small>MISIA OFFICIAL SUPPORTERS CLUB</small></p>
   <div class="foot-links">
-    <a href="#">会員規約</a>
-    <a href="#">プライバシーポリシー</a>
-    <a href="#">特定商取引法に基づく表記</a>
-    <a href="#">FAQ</a>
-    <a href="#">CONTACT</a>
+    <a href="#/terms">会員規約</a>
+    <a href="#/privacy">プライバシーポリシー</a>
+    <a href="#/tokushoho">特定商取引法に基づく表記</a>
+    <a href="#/faq">FAQ</a>
+    <a href="#/contact">CONTACT</a>
   </div>
   <p class="copyright">Rhythmedia Group. Copyright Rhythmedia all rights reserved.</p>
   <p class="demo-note">本ページはリニューアル提案用のデモです。日付・一部コンテンツはサンプルデータを含みます。</p>
@@ -860,6 +970,295 @@ footer{
   }
   sendBtn.addEventListener("click", sendInput);
   input.addEventListener("keydown", function(e){ if (e.key === "Enter") sendInput(); });
+
+  /* =========================================================
+     ハッシュルーター + サブページ(ダミーコンテンツ)
+     ========================================================= */
+  var pageEl = document.getElementById("page");
+  var mainEl = document.getElementById("top");
+
+  function pageShell(en, jp, crumb, body){
+    return '<div class="page-hero"><div class="pwrap">' +
+      '<p class="breadcrumb"><a href="#top">TOP</a> / ' + crumb + '</p>' +
+      '<h2>' + en + '</h2><span class="sec-jp">' + jp + '</span>' +
+      '</div></div><div class="page-body">' +
+      '<span class="dummy-note">※ デモ用サンプルページです</span>' + body +
+      '<p style="margin-top:48px"><a class="btn btn-outline" href="#top">← トップへ戻る</a></p></div>';
+  }
+
+  var newsData = {
+    "1": { d:"2026.07.07", c:"TOUR", t:"2027年全国アリーナツアー「STARTS presents MISIA BIGVOICE BAND ORCHESTRA 2027 BEYOND FREEDOM」開催決定!",
+      b:'<figure class="art-photo"><img src="assets/img/live.jpg" alt="ライブステージ"></figure>' +
+        '<p>MISIAの2027年全国アリーナツアー「STARTS presents MISIA BIGVOICE BAND ORCHESTRA 2027 BEYOND FREEDOM」の開催が決定しました!バンドとオーケストラを従えた圧巻の"BIGVOICE"を、全国5都市10公演でお届けします。</p>' +
+        '<h4>公演スケジュール</h4>' +
+        '<table class="dtable"><tr><th>2027.1.16 (土) / 1.17 (日)</th><td>さいたまスーパーアリーナ</td></tr>' +
+        '<tr><th>2027.2.6 (土) / 2.7 (日)</th><td>大阪城ホール</td></tr>' +
+        '<tr><th>2027.2.20 (土) / 2.21 (日)</th><td>マリンメッセ福岡</td></tr>' +
+        '<tr><th>2027.3.6 (土) / 3.7 (日)</th><td>日本ガイシホール(名古屋)</td></tr>' +
+        '<tr><th>2027.3.27 (土) / 3.28 (日)</th><td>セキスイハイムスーパーアリーナ(仙台)</td></tr></table>' +
+        '<h4>MSA会員最速先行受付</h4>' +
+        '<p>MSA会員のみなさまを対象とした最速先行(抽選)を実施します。<b>受付期間:2026年8月1日(土) 12:00 〜 8月16日(日) 23:59</b>。受付開始時に改めてNEWSとメールでお知らせします。</p>' +
+        '<div class="notice"><b>【注意事項】</b><br>・お申し込みには2026年8月時点で有効な年会員資格が必要です。<br>・お席は抽選となります。受付順ではありません。<br>・詳細は受付開始時の案内をご確認ください。</div>' +
+        '<p><a class="btn btn-primary" href="#/ticket">チケット情報を見る</a></p>' },
+    "2": { d:"2026.07.07", c:"UPDATE", t:"「DIARY」更新!MSA STAFFがツアーリハーサルの様子をお届け",
+      b:'<p>MSA STAFFによるDIARYを更新しました。今回は、いよいよ大詰めを迎えた「星空のライヴXIII GRAND HORIZON」東京公演に向けたリハーサルスタジオの様子をお届けしています。</p>' +
+        '<p>セットリストの調整に真剣な表情で向き合うMISIAと、バンドメンバーの和やかなオフショットも。ぜひDIARYページからご覧ください。</p>' +
+        '<p><a class="btn btn-primary" href="#/diary">DIARYを読む</a></p>' },
+    "3": { d:"2026.07.06", c:"GOODS", t:"「STARTS presents MISIA 星空のライヴXIII GRAND HORIZON」オフィシャルグッズ東京公演受取販売のご案内",
+      b:'<p>7月25日(土)東京・有明アリーナ公演にご来場のみなさまへ、オフィシャルグッズの「公演受取販売(事前決済)」を実施します。事前にオンラインでご購入いただくと、当日は専用レーンで待ち時間なくお受け取りいただけます。</p>' +
+        '<h4>受付期間</h4><p><b>2026年7月10日(金) 12:00 〜 7月18日(土) 23:59</b></p>' +
+        '<p><a class="btn btn-primary" href="#/goods">受取販売の詳細へ</a></p>' },
+    "4": { d:"2026.07.05", c:"GOODS", t:"MISIA Birthdayを記念したBRIGITTE TANAKAコラボレーションアイテムが登場!",
+      b:'<p>MISIAのBirthdayを記念して、パリ発のブランド「BRIGITTE TANAKA」とのコラボレーションアイテムが登場します。オーガンジーに繊細な刺繍を施したトートバッグなど、この機会だけの特別なラインナップです。</p>' +
+        '<h4>ラインナップ(一部)</h4>' +
+        '<table class="dtable"><tr><th>オーガンジートートバッグ</th><td>¥8,800(税込)</td></tr>' +
+        '<tr><th>刺繍ミニポーチ</th><td>¥5,500(税込)</td></tr>' +
+        '<tr><th>チャーム付きキーリング</th><td>¥3,850(税込)</td></tr></table>' +
+        '<p>7月7日(火) 12:00よりオフィシャルストアにて数量限定発売。会員のみなさまは1日早い先行購入が可能です。</p>' +
+        '<p><a class="btn btn-primary" href="#/store">STOREへ</a></p>' },
+    "5": { d:"2026.07.03", c:"PROJECT", t:"「星空に願いをプロジェクト for 国立成育医療研究センター with MSA」七夕企画を実施!",
+      b:'<p>「星空に願いをプロジェクト」の七夕企画として、会員のみなさまから"星に願うメッセージ"を募集します。お寄せいただいたメッセージは、短冊として国立成育医療研究センターに飾られるほか、メッセージ1件につき100円がプロジェクトを通じて寄付されます。</p>' +
+        '<h4>募集期間</h4><p><b>2026年7月3日(金) 〜 7月7日(火) 23:59</b></p>' +
+        '<p>メッセージはMESSAGEフォームより「七夕企画」を選択してご投稿ください。</p>' +
+        '<p><a class="btn btn-primary" href="#/message">メッセージを送る</a></p>' },
+    "6": { d:"2026.07.01", c:"UPDATE", t:"「MSAカレンダー2026年7月」壁紙を配信開始しました",
+      b:'<p>毎月恒例のMSAカレンダー壁紙、2026年7月版の配信を開始しました。PC・タブレット・スマートフォンの3サイズをご用意しています。DOWNLOADページよりお受け取りください。</p>' +
+        '<p><a class="btn btn-primary" href="#/download">DOWNLOADへ</a></p>' },
+    "7": { d:"2026.06.28", c:"UPDATE", t:"「おしえて!MISIA」に新しい回答を掲載しました",
+      b:'<p>会員のみなさまからいただいたご質問に、MISIAが答える「おしえて!MISIA」を更新しました。今回はライブ前のルーティンについての質問にお答えしています。</p>' +
+        '<p><a class="btn btn-primary" href="#/oshiete">おしえて!MISIAへ</a></p>' },
+    "8": { d:"2026.06.20", c:"MAG", t:"会員限定デジタルマガジン「MISIA MAG VOL.96」を公開しました",
+      b:'<p>MISIA MAG最新号VOL.96を公開しました。15thアルバム「LOVE NEVER DIES」制作の舞台裏に迫るロングインタビューと、撮り下ろしフォトを収録しています。</p>' +
+        '<p><a class="btn btn-primary" href="#/mag">MISIA MAGへ</a></p>' }
+  };
+
+  function newsListPage(){
+    var rows = "";
+    Object.keys(newsData).forEach(function(k){
+      var n = newsData[k];
+      rows += '<a class="news-item" href="#/news/' + k + '"><time>' + n.d + '</time>' +
+        '<span class="badge' + (n.c === "TOUR" ? " hot" : "") + '">' + n.c + '</span>' +
+        '<span class="t">' + n.t + '</span><span class="arrow">→</span></a>';
+    });
+    return pageShell("News", "ニュース一覧", "NEWS", '<div class="news-list" style="border:1px solid var(--line)">' + rows + '</div>');
+  }
+  function newsDetailPage(id){
+    var n = newsData[id];
+    if (!n) return null;
+    return pageShell("News", "ニュース詳細", '<a href="#/news">NEWS</a> / 記事',
+      '<div class="art-meta"><time>' + n.d + '</time><span class="badge' + (n.c === "TOUR" ? " hot" : "") + '">' + n.c + '</span></div>' +
+      '<h4 style="border:none;padding:0;font-size:19px;line-height:1.7;margin:0 0 26px">' + n.t + '</h4>' + n.b);
+  }
+
+  var pages = {
+    "voice": function(){ return pageShell("MISIA VOICE", "MISIA本人からのメッセージ", "MISIA VOICE",
+      '<figure class="art-photo"><img src="assets/img/voice.jpg" alt="MISIA"></figure>' +
+      '<div class="art-meta"><time>2025.07.11</time><span class="badge hot">LATEST</span></div>' +
+      '<h4 style="border:none;padding:0;font-size:19px;margin:0 0 20px">皆さんへ</h4>' +
+      '<p>皆さん、こんにちは!MISIAです。</p>' +
+      '<p>CANDLE NIGHTが終わって、少しひと息…と思いきや、もう次のステージに向けて動き出しています。キャンドルの灯りに包まれたあの時間、会場で一緒に過ごしてくれた皆さん、本当にありがとうございました。皆さんの歌声と拍手が、いまも心に響いています。</p>' +
+      '<p>夏はもうすぐそこ。体に気をつけて、また元気な顔で会いましょうね!</p>' +
+      '<p style="text-align:right;font-weight:800">MISIA</p>' +
+      '<h4>バックナンバー</h4>' +
+      '<div class="entry-list">' +
+      '<a class="entry" href="#/voice"><time>2025.08.18</time><span class="by misia">MISIA</span><span class="t">「STARTS presents MISIA CANDLE NIGHT 2025」を終えて</span></a>' +
+      '<a class="entry" href="#/voice"><time>2024.12.25</time><span class="by misia">MISIA</span><span class="t">Happy Holidays !</span></a>' +
+      '<a class="entry" href="#/voice"><time>2024.03.09</time><span class="by misia">MISIA</span><span class="t">国内ファイナル、そして26周年!</span></a>' +
+      '<a class="entry" href="#/voice"><time>2024.03.08</time><span class="by misia">MISIA</span><span class="t">国際女性デー</span></a>' +
+      '</div>'); },
+
+    "diary": function(){ return pageShell("Diary", "MISIAとスタッフの日記", "DIARY",
+      '<div class="art-meta"><time>2026.07.07</time><span class="badge">MSA STAFF</span></div>' +
+      '<h4 style="border:none;padding:0;font-size:19px;margin:0 0 20px">ツアーリハーサル初日!</h4>' +
+      '<p>こんにちは、MSA STAFFです。今日から東京公演に向けたリハーサルがスタートしました!</p>' +
+      '<p>スタジオに入った瞬間から、MISIAの歌声が響き渡っていて、スタッフ一同鳥肌…。バンドのみなさんとセットリストを一曲ずつ確認しながら、じっくり作り込んでいます。本番をどうぞお楽しみに!</p>' +
+      '<p>差し入れにいただいた七夕ゼリー、みんなでおいしくいただきました。ありがとうございました!</p>' +
+      '<h4>最近の日記</h4>' +
+      '<div class="entry-list">' +
+      '<a class="entry" href="#/diary"><time>2026.07.07</time><span class="by">MSA STAFF</span><span class="t">ツアーリハーサル初日!</span></a>' +
+      '<a class="entry" href="#/diary"><time>2026.05.01</time><span class="by">MSA STAFF</span><span class="t">ゴールデンウィークのご挨拶</span></a>' +
+      '<a class="entry" href="#/diary"><time>2026.03.02</time><span class="by">MSA STAFF</span><span class="t">撮影現場より</span></a>' +
+      '<a class="entry" href="#/diary"><time>2026.02.21</time><span class="by misia">MISIA</span><span class="t">デビュー28周年!</span></a>' +
+      '<a class="entry" href="#/diary"><time>2026.02.06</time><span class="by">MSA STAFF</span><span class="t">新しいお知らせの準備中…</span></a>' +
+      '</div>'); },
+
+    "mag": function(){ return pageShell("MISIA MAG", "会員限定デジタルマガジン", "MISIA MAG",
+      '<figure class="art-photo"><img src="assets/img/mag.jpg" alt="MISIA MAG VOL.96"></figure>' +
+      '<div class="art-meta"><time>2026.06.20</time><span class="badge hot">VOL.96</span></div>' +
+      '<h4 style="border:none;padding:0;font-size:19px;margin:0 0 16px">VOL.96 — LOVE NEVER DIES 特集</h4>' +
+      '<p>15thアルバム「LOVE NEVER DIES」を大特集。制作の舞台裏に迫る2万字ロングインタビュー、レコーディングスタジオの撮り下ろしフォト、全曲セルフライナーノーツを収録しています。</p>' +
+      '<p><a class="btn btn-primary" href="#/mag">VOL.96を読む(会員限定)</a></p>' +
+      '<h4>バックナンバー</h4>' +
+      '<div class="mag-grid">' +
+      '<a class="mag-tile latest" href="#/mag"><span class="vol">VOL.96</span><span class="d">2026.06</span></a>' +
+      '<a class="mag-tile" href="#/mag"><span class="vol">VOL.95</span><span class="d">2026.03</span></a>' +
+      '<a class="mag-tile" href="#/mag"><span class="vol">VOL.94</span><span class="d">2025.12</span></a>' +
+      '<a class="mag-tile" href="#/mag"><span class="vol">VOL.93</span><span class="d">2025.09</span></a>' +
+      '<a class="mag-tile" href="#/mag"><span class="vol">VOL.92</span><span class="d">2025.06</span></a>' +
+      '<a class="mag-tile" href="#/mag"><span class="vol">VOL.91</span><span class="d">2025.03</span></a>' +
+      '<a class="mag-tile" href="#/mag"><span class="vol">VOL.90</span><span class="d">2024.12</span></a>' +
+      '<a class="mag-tile" href="#/mag"><span class="vol">VOL.89</span><span class="d">2024.09</span></a>' +
+      '</div>'); },
+
+    "interview": function(){ return pageShell("Interview / Report", "インタビュー・ライブレポート", "INTERVIEW / REPORT",
+      '<div class="cards" style="grid-template-columns:1fr 1fr">' +
+      '<article class="card"><div class="visual"><img src="assets/img/live.jpg" alt="ライブレポート"><span class="cat">REPORT</span></div><div class="body">' +
+      '<h3>星空のライヴXIII 大阪公演レポート</h3><p>満員の大阪城ホールで繰り広げられた圧巻の2時間半。オーケストラとともに描かれた"大地平線"の一夜を写真とともに振り返ります。</p>' +
+      '<a class="go" href="#/interview">続きを読む</a></div></article>' +
+      '<article class="card"><div class="visual"><img src="assets/img/mag.jpg" alt="インタビュー"><span class="cat">INTERVIEW</span></div><div class="body">' +
+      '<h3>「LOVE NEVER DIES」インタビュー(前編)</h3><p>15枚目のオリジナルアルバムに込めた想いとは。楽曲づくりの原点から最新モードまで、じっくり語ったロングインタビュー。</p>' +
+      '<a class="go" href="#/interview">続きを読む</a></div></article>' +
+      '</div>'); },
+
+    "oshiete": function(){ return pageShell("おしえて!MISIA", "MISIAが質問に答えるコーナー", "おしえて!MISIA",
+      '<p>MSA会員のみなさまからいただいた質問にMISIAが答えるコーナー!年会員・月会員によって閲覧いただける内容が異なります。質問は随時受け付けています。</p>' +
+      '<p><a class="btn btn-primary" href="#/message">質問を送る</a></p>' +
+      '<h4>最近の回答</h4>' +
+      '<details class="qa"><summary>ライブ前に必ずやるルーティンはありますか?<span class="tag-mini">年会員</span></summary><div class="a">本番前は必ず温かいお茶をゆっくり飲んで、深呼吸を3回。それから鏡の前で自分に「今日も楽しもう!」って声をかけます。これをやると不思議と落ち着くんです。</div></details>' +
+      '<details class="qa"><summary>最近ハマっている夜食はなんですか?<span class="tag-mini">月会員</span></summary><div class="a">温泉卵をのせたお茶漬け!ツアー中に出会ってから、すっかりお気に入りです。夜遅くでも重たくならないのがうれしいところ。</div></details>' +
+      '<details class="qa"><summary>歌声のケアはどうしていますか?<span class="tag-mini">年会員</span><span class="tag-mini">月会員</span></summary><div class="a">加湿と睡眠、これに尽きます!ホテルの部屋でも必ず加湿器を回して、本番前日は喉を使いすぎないように"筆談の日"を作ることもあるんですよ。</div></details>' +
+      '<details class="qa"><summary>星空のライヴでいちばん思い出に残っている景色は?<span class="tag-mini">年会員</span></summary><div class="a">客席のみなさんのペンライトが、ほんとうの星空みたいに揺れていた瞬間。あの景色は何度見ても泣きそうになります。</div></details>'); },
+
+    "download": function(){ return pageShell("Download", "壁紙ダウンロード", "DOWNLOAD",
+      '<p>毎月更新のMSAカレンダー壁紙。画像は3サイズからお選びいただけます。お好みのサイズをダウンロードください。</p>' +
+      '<div class="dl-grid">' +
+      '<div class="dl-item"><h5>MSA calendar 2026年7月</h5><span class="lim">年月会員限定</span><div class="dl-sizes"><button type="button">PC (1920×1080)</button><button type="button">タブレット</button><button type="button">スマホ</button></div></div>' +
+      '<div class="dl-item"><h5>MSA calendar 2026年6月</h5><span class="lim">年月会員限定</span><div class="dl-sizes"><button type="button">PC (1920×1080)</button><button type="button">タブレット</button><button type="button">スマホ</button></div></div>' +
+      '<div class="dl-item"><h5>MSA calendar 2026年5月</h5><span class="lim">年月会員限定</span><div class="dl-sizes"><button type="button">PC (1920×1080)</button><button type="button">タブレット</button><button type="button">スマホ</button></div></div>' +
+      '<div class="dl-item"><h5>MSA calendar 2026年4月</h5><span class="lim">年月会員限定</span><div class="dl-sizes"><button type="button">PC (1920×1080)</button><button type="button">タブレット</button><button type="button">スマホ</button></div></div>' +
+      '</div>'); },
+
+    "message": function(){ return pageShell("Message", "MISIAへのメッセージフォーム", "MESSAGE",
+      '<p>MISIAへのメッセージはこちらから!MISIAへの質問やMISIAに関するエピソード、MISIA自慢などもぜひお送りください。お送りいただいた内容は、MEMBERS LOUNGEやMSAアプリなどでご紹介させていただくこともございます。</p>' +
+      '<div class="form-row"><label>メッセージ種別<span class="req">必須</span></label><select><option>----- 選択してください -----</option><option>MISIAへの質問</option><option>MISIAに関するエピソード</option><option>MISIA自慢</option><option>応援メッセージ</option><option>七夕企画</option></select></div>' +
+      '<div class="form-row"><label>ペンネーム</label><input type="text" placeholder="例)ほしぞら太郎"></div>' +
+      '<div class="form-row"><label>投稿内容<span class="req">必須</span></label><textarea placeholder="メッセージをご記入ください"></textarea></div>' +
+      '<div class="form-row"><label>掲載可否<span class="req">必須</span></label><label class="radio"><input type="radio" name="pub" checked>掲載OK</label><label class="radio"><input type="radio" name="pub">掲載NG</label></div>' +
+      '<div class="notice"><b>【注意事項】</b><br>・こちらにお問い合わせをいただきましてもお答えできません。お問い合わせは「CONTACT」よりお願いいたします。<br>・掲載させていただく際、いただいた内容を一部編集させていただく場合がございます。</div>' +
+      '<p><a class="btn btn-primary" href="#/message">入力した内容を確認する</a></p>'); },
+
+    "store": function(){ return pageShell("Store", "オフィシャルグッズストア", "STORE",
+      '<p>オフィシャルグッズストアのおすすめアイテム。会員のみなさまは限定アイテムのご購入や先行購入がご利用いただけます。</p>' +
+      '<div class="goods-grid">' +
+      '<div class="goods"><span class="gname">BRIGITTE TANAKA コラボ オーガンジートートバッグ</span><span class="gprice">¥8,800(税込)</span><span class="gnote">数量限定 / 会員先行購入対象</span></div>' +
+      '<div class="goods"><span class="gname">星空のライヴXIII GRAND HORIZON ツアーパンフレット</span><span class="gprice">¥3,000(税込)</span><span class="gnote">公演受取販売対象</span></div>' +
+      '<div class="goods"><span class="gname">MSAオリジナル アロマキャンドル</span><span class="gprice">¥3,300(税込)</span><span class="gnote">会員限定</span></div>' +
+      '<div class="goods"><span class="gname">BEYOND FREEDOM ロゴTシャツ(先行受注)</span><span class="gprice">¥4,500(税込)</span><span class="gnote">2027ツアーグッズ第1弾</span></div>' +
+      '</div>' +
+      '<div class="notice">実際の購入手続きはオフィシャルストア(外部サイト)で行います。このページはデモのため遷移しません。</div>'); },
+
+    "faq": function(){ return pageShell("FAQ", "よくある質問", "FAQ",
+      '<h4>入会・継続について</h4>' +
+      '<details class="qa"><summary>入会方法を教えてください</summary><div class="a">MEMBERS LOUNGEの入会ページから、年会員または月会員をお選びいただきお手続きください。お支払いはクレジットカード・キャリア決済がご利用いただけます。</div></details>' +
+      '<details class="qa"><summary>会員期限の確認方法を教えてください</summary><div class="a">MYPAGEの「会員情報」欄で、年会員・月会員それぞれの有効期限をご確認いただけます。</div></details>' +
+      '<details class="qa"><summary>継続(更新)の方法を教えてください</summary><div class="a">有効期限の約2ヶ月前にご案内メールをお送りします。メール記載の手順、またはMYPAGEからお手続きください。自動継続を設定いただくと、お手続きなしで継続されます。</div></details>' +
+      '<h4>MEMBERS LOUNGEについて</h4>' +
+      '<details class="qa"><summary>デジタル会員証はどこで表示できますか?</summary><div class="a">MYPAGEの「デジタル会員証」からいつでも表示できます。コンサート会場での本人確認の際にご提示ください。</div></details>' +
+      '<details class="qa"><summary>MSAからのメールが届きません</summary><div class="a">迷惑メールフォルダをご確認のうえ、「@msa.misia.jp」からのメールを受信できるようドメイン指定受信の設定をお願いします。</div></details>' +
+      '<h4>コンサート/イベントについて</h4>' +
+      '<details class="qa"><summary>チケット先行の申込方法を教えてください</summary><div class="a">公演ごとのNEWSに記載された受付期間中に、チケット情報ページからお申し込みください。抽選結果はメールでお知らせします。</div></details>'); },
+
+    "ticket": function(){ return pageShell("Ticket", "チケット情報", "TICKET",
+      '<h4>受付中の公演</h4>' +
+      '<table class="dtable">' +
+      '<tr><th>公演名</th><td>STARTS presents MISIA 星空のライヴXIII GRAND HORIZON 東京公演</td></tr>' +
+      '<tr><th>日時</th><td>2026年7月25日(土) 開場 17:00 / 開演 18:00</td></tr>' +
+      '<tr><th>会場</th><td>東京・有明アリーナ</td></tr>' +
+      '<tr><th>席種 / 料金</th><td>S席 ¥12,000 / A席 ¥9,500(税込・全席指定)</td></tr>' +
+      '<tr><th>受付期間</th><td>2026年7月8日(水) 12:00 〜 7月14日(火) 23:59【追加受付・先着】</td></tr>' +
+      '</table>' +
+      '<p><a class="btn btn-primary" href="#/ticket">申し込む(デモ)</a></p>' +
+      '<h4>今後の予定</h4>' +
+      '<p>2027年全国アリーナツアー「BEYOND FREEDOM」のMSA会員最速先行は、<b>2026年8月1日(土) 12:00</b>受付開始予定です。</p>' +
+      '<div class="notice"><b>【注意事項】</b><br>・お申し込みには有効な会員資格が必要です。<br>・お一人さま1公演につき4枚までお申し込みいただけます。<br>・チケットは電子チケットでのお渡しとなります。</div>'); },
+
+    "goods": function(){ return pageShell("Goods Pickup", "グッズ公演受取販売", "GOODS",
+      '<p>オフィシャルグッズを事前にオンラインで購入し、公演当日に会場の専用レーンで受け取れるサービスです。物販列に並ばずスムーズにお受け取りいただけます。</p>' +
+      '<h4>ご利用の流れ</h4>' +
+      '<div class="step"><span class="n">1</span><div class="t"><b>事前購入</b><p>受付期間中(7月10日 12:00〜7月18日 23:59)にオンラインで注文・決済します。</p></div></div>' +
+      '<div class="step"><span class="n">2</span><div class="t"><b>受取QRコードの発行</b><p>公演前日までに受取用QRコードをメールでお送りします。</p></div></div>' +
+      '<div class="step"><span class="n">3</span><div class="t"><b>当日受け取り</b><p>会場の「事前決済受取レーン」でQRコードをご提示ください。開場前から受け取り可能です。</p></div></div>' +
+      '<div class="notice"><b>【注意事項】</b><br>・受取は購入者ご本人さまに限ります。デジタル会員証をあわせてご提示ください。<br>・公演中止の場合は全額返金いたします。</div>' +
+      '<p><a class="btn btn-primary" href="#/store">対象グッズを見る</a></p>'); },
+
+    "mypage": function(){ return pageShell("My Page", "会員情報", "MYPAGE",
+      '<table class="dtable">' +
+      '<tr><th>会員番号</th><td>00000000</td></tr>' +
+      '<tr><th>お名前</th><td>test 様</td></tr>' +
+      '<tr><th>年会員種別</th><td>通常会員(継続中)</td></tr>' +
+      '<tr><th>年会員 有効期限</th><td>2027年6月30日</td></tr>' +
+      '<tr><th>年会員自動継続</th><td>設定なし</td></tr>' +
+      '<tr><th>月会員</th><td>未入会</td></tr>' +
+      '<tr><th>入会日</th><td>2026年7月1日</td></tr>' +
+      '</table>' +
+      '<div class="mypage-actions">' +
+      '<a href="#/mypage">会員情報確認・更新</a>' +
+      '<a href="#/mypage">パスワード変更</a>' +
+      '<a href="#/mypage">自動継続設定</a>' +
+      '<a href="#top">デジタル会員証を表示</a>' +
+      '</div>' +
+      '<div class="notice">月会員にもご入会いただくと、月会員限定コンテンツ(おしえて!MISIAの一部回答など)もお楽しみいただけます。</div>'); },
+
+    "contact": function(){ return pageShell("Contact", "お問い合わせ", "CONTACT",
+      '<p>会員資格・お手続き・発送物などに関するお問い合わせはこちらから。3営業日以内にメールでご返信します。</p>' +
+      '<div class="form-row"><label>お問い合わせ種別<span class="req">必須</span></label><select><option>----- 選択してください -----</option><option>入会・継続について</option><option>チケットについて</option><option>グッズ・発送物について</option><option>その他</option></select></div>' +
+      '<div class="form-row"><label>お問い合わせ内容<span class="req">必須</span></label><textarea placeholder="お問い合わせ内容をご記入ください"></textarea></div>' +
+      '<p><a class="btn btn-primary" href="#/contact">送信する(デモ)</a></p>'); },
+
+    "terms": function(){ return pageShell("Terms", "会員規約", "会員規約",
+      '<div class="legal">' +
+      '<h4>第1条(目的)</h4><p>本規約は、MISIA official supporters club MSA(以下「本会」)の会員に関する事項を定めるものです。会員は本規約に同意のうえご入会いただくものとします。</p>' +
+      '<h4>第2条(会員資格)</h4><p>所定の入会手続きを完了し、会費のお支払いが確認された時点で会員資格が発生します。会員資格は年会員・月会員の2種類とし、それぞれ有効期間・特典が異なります。</p>' +
+      '<h4>第3条(会費)</h4><p>会費は入会案内ページに定めるとおりとします。お支払いいただいた会費は、理由の如何を問わず返金いたしません。</p>' +
+      '<h4>第4条(禁止事項)</h4><p>会員資格の譲渡・貸与、チケットの不正転売、本会コンテンツの無断転載・複製その他運営を妨げる行為を禁止します。</p>' +
+      '<p style="margin-top:26px;font-size:12px">※ 本ページはデモ用のサンプル条文です。</p></div>'); },
+
+    "privacy": function(){ return pageShell("Privacy Policy", "プライバシーポリシー", "プライバシーポリシー",
+      '<div class="legal">' +
+      '<h4>個人情報の取得と利用目的</h4><p>本会は、会員サービスの提供、チケット・グッズの発送、お問い合わせ対応、および会員体験向上のためのパーソナライズ(おすすめコンテンツの表示等)の目的で個人情報を取得・利用します。</p>' +
+      '<h4>第三者提供</h4><p>法令に基づく場合を除き、ご本人の同意なく第三者に個人情報を提供することはありません。</p>' +
+      '<h4>パーソナライズ機能について</h4><p>閲覧履歴等の利用データは、おすすめコンテンツの表示にのみ利用し、設定ページからいつでもオフにできます。</p>' +
+      '<p style="margin-top:26px;font-size:12px">※ 本ページはデモ用のサンプル文面です。</p></div>'); },
+
+    "tokushoho": function(){ return pageShell("Legal", "特定商取引法に基づく表記", "特定商取引法に基づく表記",
+      '<table class="dtable">' +
+      '<tr><th>販売事業者</th><td>Rhythmedia Group(サンプル表記)</td></tr>' +
+      '<tr><th>お支払い方法</th><td>クレジットカード / キャリア決済</td></tr>' +
+      '<tr><th>会費</th><td>年会員 ¥5,000(税込)/ 月会員 ¥550(税込)※サンプル金額</td></tr>' +
+      '<tr><th>役務の提供時期</th><td>入会手続き完了後、直ちにご利用いただけます</td></tr>' +
+      '<tr><th>返品・キャンセル</th><td>サービスの性質上、お支払い後の返金はいたしかねます</td></tr>' +
+      '</table>' +
+      '<p style="font-size:12px">※ 本ページはデモ用のサンプル表記です。</p>'); }
+  };
+
+  function router(){
+    var h = location.hash || "";
+    if (h.indexOf("#/") === 0){
+      var path = h.slice(2).split("/");
+      var html = null;
+      if (path[0] === "news"){
+        html = path[1] ? newsDetailPage(path[1]) : newsListPage();
+      } else if (pages[path[0]]){
+        html = pages[path[0]]();
+      }
+      if (html){
+        pageEl.innerHTML = html;
+        pageEl.hidden = false;
+        mainEl.style.display = "none";
+        window.scrollTo(0, 0);
+        return;
+      }
+    }
+    // ホーム表示(サブページから戻った直後はmainが非表示のため手動でスクロール)
+    pageEl.hidden = true;
+    mainEl.style.display = "";
+    if (h.length > 1){
+      var anchor = document.getElementById(h.slice(1));
+      if (anchor) requestAnimationFrame(function(){ anchor.scrollIntoView(); });
+    }
+  }
+  window.addEventListener("hashchange", router);
+  router();
 })();
 </script>
 </body>
