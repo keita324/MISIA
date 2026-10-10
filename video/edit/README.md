@@ -81,3 +81,19 @@ EDL=edl_song2.py ./build.sh 全体カメラ.MOV 手持ちカメラ.MOV out_song2
 | 3:36 | `TOWACO` / `SO HD` | 2人目（右から3番目） |
 | 3:54 | `KOTOMI` | 3人目（TOWACO の右隣）。4:06 まで |
 | 4:26 | `YEAH` | |
+
+---
+
+# YouTube Shorts（縦型 1080x1920）: SAX SOLO RELAY
+
+`short_sax_relay.py` … 2曲目のサックスソロ（3:07〜4:06）を、3人でつなぐ「ゲームのプレイヤー交代」に見立てた約1分の縦型動画。
+
+```bash
+python3 short_sax_relay.py 全体カメラ.MOV 手持ちカメラ.MOV short_sax_relay_vertical.mp4
+```
+
+* 上: タイトル `SAX SOLO RELAY` / 曲名
+* 中: ホーン全体（全体カメラ・手持ちカメラを 4 小節ごとに切り替え）
+* 下: いまソロ中の人のアップ（ゆっくりズームイン）
+* 交代のたびに白フラッシュ + `PLAYER 1/2/3`、下に `P1 SHIORI` などと進行ゲージ
+* 4:06 で全員が戻ったら `STAGE CLEAR!`
