@@ -16,6 +16,11 @@ for i in 0 1 2 3; do
 done
 wait
 ls "$OUT"/chunk_*.mp4 | sed "s/^/file '/;s/$/'/" > "$OUT/list.txt"
+# edl.MUTE の区間だけ音を消す（前後 0.05 秒でフェード）
+AF=$(python3 -c "
+import sys; sys.path.insert(0,'$HERE'); import edl
+g=['min(1,max(0,max(($a-t)/0.05,(t-$b)/0.05)))'.replace('\$a',str(a)).replace('\$b',str(b)) for a,b in edl.MUTE]
+print('volume=' + chr(39) + ('*'.join(g) or '1') + chr(39) + ':eval=frame')")
 ffmpeg -v error -y -f concat -safe 0 -i "$OUT/list.txt" -i "$WIDE" -map 0:v -map 1:a \
-  -c:v copy -c:a aac -b:a 256k -t "$DUR" -movflags +faststart "$OUT/f_it_up_edit.mp4"
+  -c:v copy -af "$AF" -c:a aac -b:a 256k -t "$DUR" -movflags +faststart "$OUT/f_it_up_edit.mp4"
 echo "done: $OUT/f_it_up_edit.mp4"

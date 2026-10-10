@@ -20,24 +20,29 @@ Louis Cole「Live 2019」の1曲目の動画を参考に、全体カメラと手
 | 0:10 | `F IT UP / BY: LOUIS COLE` | 曲名と作曲者のクレジット（演奏曲そのものなので残した） |
 | 0:13–0:48 | ● `KEYBOARD PART` / ▶ / ● `KEYBOARD PART 2` / ▶ / ● `BASS` / ▶ | ループ録音の REC / PLAY 表示 |
 | 1:15 | `THROAT SLAP VOCAL RUN` | |
+| 1:17 | `YEAH` ×2 | 追加 |
 | 1:26 | `FF>>` | メンバー入場部分 |
-| 1:45 | `20 MINUTES LATER` | |
+| 1:45 | `20 MINUTES LATER` | 表示中は音声を消す（`edl.py` の `MUTE`） |
 | 1:59 | `EVERYONE` | |
 | 2:13–2:22 | `KAZUHO` → `IZUSHUN` → `KAZUHO AND IZUSHUN` | 本家の人名（JACOB MANN / PAUL CORNISH）の位置に置き換え |
 | 2:47 | `IZUSHUN` | 本家 SAM WILKES（ベース）の位置 |
 | 2:49 | `BASS FILL APPROVED` | |
 | 3:24 | `HORN BREAKDOWN` | 2分割画面 |
+| 3:49 | `KAESUKE` | トランペットソロ（本家 ZACH RAMACIER の位置） |
+| 4:14 | （一瞬暗転 → ドラム → 分割画面） | 本家と同じ流れ |
 | 4:15 | `BASSLINE BUDDIEZ` | 5分割画面のラベル |
-| 4:39 | `THEY LOVE IT` | |
+| 4:40 | `THEY LOVE IT` | |
 
-ホーンの人名（本家 ZACH RAMACIER）は名前の指定がないので文字なし（分割画面・ズームのみ）。
+文字はタイピング風ではなく、そのまま出てそのまま消える（`type=True` を付けた文字だけタイピング表示）。
 
 ## 編集の変更方法
 
 * カット・ズーム・分割画面: `edl.py` の `SHOTS`
   * `S(開始, 終了, "W"/"H", 開始時の枠, 終了時の枠)` … 枠を変えるとゆっくりズームイン/アウト
   * 枠の位置は `WR`（全体カメラ）/ `HR`（手持ち）に `(x, y, 幅, 高さ)` で定義
+* ズームの動きの量: `edl.py` の `ZOOM_AMOUNT`（1.0 = 最大、現在 0.8）
 * 文字: `edl.py` の `TEXTS`（時間・文言・位置・サイズ）
+* 音声を消す区間: `edl.py` の `MUTE`
 * フォント: Press Start 2P（SIL Open Font License, `fonts/OFL.txt`）
 
 ## 書き出し

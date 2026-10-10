@@ -196,13 +196,12 @@ def render_texts(canvas, t):
         if kind == "rec":
             draw_icon(canvas, PIX_DOT, 150, 950, 7, (230, 20, 30), alpha)
             if t < tx.get("text_until", t1):
-                _left_text(canvas, typed(tx["text"], t, t0, 40), 200, 950, 32, alpha, (235, 30, 40))
+                _left_text(canvas, tx["text"], 200, 950, 32, alpha, (235, 30, 40))
         elif kind == "play":
             draw_icon(canvas, PIX_PLAY, 150, 950, 7, (40, 235, 60), alpha)
         else:
-            s = tx["text"]
-            if tx.get("type", True):
-                s = typed(s, t, t0)
+            # text simply appears and disappears (no typewriter); type=True opts in
+            s = typed(tx["text"], t, t0) if tx.get("type") else tx["text"]
             draw_pixel_text(canvas, s, tx["pos"], tx["size"], alpha)
     return canvas
 
@@ -250,7 +249,7 @@ def compose(shot, t, frames, out_w, out_h, scale):
         return Image.new("RGB", (out_w, out_h))
     if shot["kind"] == "single":
         rects = edl.WR if shot["src"] == "W" else edl.HR
-        r = lerp_rect(rects[shot["r0"]], rects[shot["r1"]], k)
+        r = lerp_rect(rects[shot["r0"]], rects[shot["r1"]], k * edl.ZOOM_AMOUNT)
         img = grab(frames[shot["src"]], r, (out_w, out_h), src_scale)
         if r[2] < 1500:
             img = sharpen(img)
@@ -281,7 +280,7 @@ def compose(shot, t, frames, out_w, out_h, scale):
             rr = (edl.WR if src == "W" else edl.HR)[rn]
             # gentle drift inside each panel; none on a continued layout so the
             # panels that stay on screen do not jump at the cut
-            z = 0.0 if (shot.get("cont") or shot.get("still")) else k
+            z = 0.0 if (shot.get("cont") or shot.get("still")) else k * edl.ZOOM_AMOUNT
             zr = (rr[0] + rr[2] * 0.04 * z, rr[1] + rr[3] * 0.04 * z, rr[2] * (1 - 0.08 * z), rr[3] * (1 - 0.08 * z))
             zr = fit_aspect(zr, pw / ph)
             box = (int(px * S), int(py * S), int(pw * S), int(ph * S))

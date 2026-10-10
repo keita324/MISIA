@@ -32,6 +32,9 @@ WR = {
     "horns":     (920, 380, 1000, 562),   # horn section, right side
     "horns_tight": (1080, 420, 720, 405),
     "horns_far": (1400, 440, 512, 288),
+    "trumpet":   (1190, 380, 560, 315),   # trumpet solo (KAESUKE)
+    "trumpet_tight": (1260, 420, 432, 243),
+    "drums":     (860, 430, 560, 315),
 }
 
 # Handheld camera framing drifts, so its rects are chosen per section.
@@ -148,7 +151,7 @@ SHOTS = [
     GRID(216.8, 220.0, [("H", "horns", (35, 25, 990, 557)), ("W", "center", (1065, 135, 820, 905))], cont=True),
     GRID(220.0, 225.5, [("H", "horns", (35, 25, 990, 557)), ("W", "bass", (1065, 135, 820, 905))], cont=True),
     S(225.5, 229.0, "W", "full", "full"),
-    S(229.0, 233.0, "W", "horns_tight", "horns_far",
+    S(229.0, 233.0, "W", "trumpet", "trumpet_tight",
       pip=("H", "bass", (40, 820, 340, 191))),
     S(233.0, 238.0, "H", "horns_tight", "horns"),
     GRID(238.0, 249.0, [
@@ -158,7 +161,10 @@ SHOTS = [
         ("W", "keys", (1350, 470, 400, 560)),
     ]),
     S(249.0, 252.2, "H", "center", "center"),
-    S(252.2, 255.6, "W", "left2", "bass"),
+    S(252.2, 253.9, "W", "left2", "bass"),
+    # short blackout -> drums -> split screen (as in the reference)
+    BLACK(253.9, 254.25),
+    S(254.25, 255.6, "W", "drums", "drums"),
     GRID(255.6, 268.6, [
         ("W", "horns", (30, 30, 860, 560)),
         ("H", "horns", (990, 40, 780, 400)),
@@ -170,14 +176,20 @@ SHOTS = [
     S(270.4, 272.0, "W", "horns", "horns_tight"),
     S(272.0, 276.4, "W", "stage", "full"),
     S(276.4, 279.2, "H", "center", "center"),
-    S(279.2, 281.0, "H", "full", "full", dim=0.55),
-    S(281.0, DURATION, "W", "full", "full", outro=(286.0, DURATION)),
+    S(279.2, 282.0, "H", "full", "full", dim=0.55),
+    S(282.0, DURATION, "W", "full", "full", outro=(286.0, DURATION)),
 ]
+
+# Audio is muted while these ranges are on screen (the "20 MINUTES LATER" card).
+MUTE = [(105.7, 107.7)]
+
+# How far a zoom travels from r0 towards r1 (1.0 = all the way).
+ZOOM_AMOUNT = 0.8
 
 # ---------------------------------------------------------------- text
 # style: "center" / "bottomleft" / "rec" / "play" / "label"
 TEXTS = [
-    dict(t0=1.4, t1=7.2, text="2026", pos=("center", 540), size=56, type=True),
+    dict(t0=1.4, t1=7.2, text="2026", pos=("center", 540), size=56),
     dict(t0=10.4, t1=13.4, text="F IT UP\nBY: LOUIS COLE", pos=("left", 900), size=40),
     dict(t0=13.6, t1=17.8, kind="rec", text="KEYBOARD PART", text_until=16.0),
     dict(t0=17.8, t1=22.0, kind="play"),
@@ -186,7 +198,9 @@ TEXTS = [
     dict(t0=37.5, t1=44.5, kind="rec", text="BASS", text_until=40.2),
     dict(t0=44.5, t1=48.5, kind="play", fade=1.2),
     dict(t0=75.1, t1=77.1, text="THROAT SLAP VOCAL RUN", pos=("center", 800), size=40),
-    dict(t0=86.6, t1=105.5, text="FF>>", pos=("center", 900), size=44, type=False),
+    dict(t0=77.2, t1=77.8, text="YEAH", pos=(700, 420), size=56),
+    dict(t0=77.9, t1=78.7, text="YEAH", pos=(1220, 640), size=56),
+    dict(t0=86.6, t1=105.5, text="FF>>", pos=("center", 900), size=44),
     dict(t0=105.7, t1=107.7, text="20 MINUTES LATER", pos=("center", 540), size=44),
     dict(t0=119.2, t1=120.6, text="EVERYONE", pos=("center", 420), size=48),
     dict(t0=133.4, t1=135.4, text="KAZUHO", pos=("center", 200), size=48),
@@ -194,6 +208,7 @@ TEXTS = [
     dict(t0=139.8, t1=142.2, text="KAZUHO\nAND\nIZUSHUN", pos=("center", 470), size=48),
     dict(t0=167.9, t1=169.7, text="IZUSHUN", pos=("center", 800), size=48),
     dict(t0=169.9, t1=171.7, text="BASS FILL APPROVED", pos=("center", 520), size=44),
+    dict(t0=229.4, t1=232.6, text="KAESUKE", pos=("center", 780), size=48),
     dict(t0=204.2, t1=216.6, text="HORN BREAKDOWN", pos=(530, 640), size=32, fade=1.4),
-    dict(t0=279.4, t1=280.9, text="THEY LOVE IT", pos=("center", 760), size=48),
+    dict(t0=280.2, t1=281.8, text="THEY LOVE IT", pos=("center", 760), size=48),
 ]
