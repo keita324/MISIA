@@ -4,6 +4,7 @@ usage: python3 short_sax_relay.py WIDE HAND OUT.mp4 [--scale 0.5]
 
 Layout (top to bottom): title, the whole horn section (16:9), a close-up of the
 current soloist, then "PLAYER n  NAME" and three progress blocks.
+When everyone comes back in (4:06) the lower panel shows the whole band.
 Times are song-2 timeline times (wide camera), see edl_song2.py.
 """
 import argparse
@@ -104,7 +105,6 @@ def compose(t, frames, s):
             text(c, f"PLAYER {p['n']}", ("center", 1320), 84, p["color"])
         text(c, f"P{p['n']}  {p['name']}", ("center", 1790), 52, p["color"])
     else:
-        text(c, "STAGE CLEAR!", ("center", 1320), 76, YELLOW)
         text(c, "ALL PLAYERS", ("center", 1790), 44)
 
     # progress blocks
