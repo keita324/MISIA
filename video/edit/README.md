@@ -97,3 +97,17 @@ python3 short_sax_relay.py 全体カメラ.MOV 手持ちカメラ.MOV short_sax_
 * 下: いまソロ中の人のアップ（ゆっくりズームイン）
 * 交代のたびに白フラッシュ + `PLAYER 1/2/3`、下に `PLAYER 1` などと進行ゲージ（名前は出さない）
 * 4:06 で全員が戻ったら下の画面がバンド全体に切り替わる（文字なし）
+
+## ほかの Shorts（`shorts.py`）
+
+```bash
+python3 shorts.py loop    1曲目全体.MOV 1曲目手持ち.MOV short_loop_vertical.mp4
+python3 shorts.py stack   1曲目全体.MOV 1曲目手持ち.MOV short_stack_vertical.mp4
+python3 shorts.py karaoke 2曲目全体.MOV 2曲目手持ち.MOV short_karaoke_vertical.mp4
+```
+
+| 名前 | 場面 | レイアウト |
+| --- | --- | --- |
+| `loop` | 1曲目 0:10–0:49 ループ録音 | 縦全画面で1人を追う。録音中は手元に寄り、大きな `REC`（点滅）/ `PLAY`、`LOOP x1〜x3` と重なった数のゲージ |
+| `stack` | 1曲目 3:23–3:54 HORN BREAKDOWN → トランペットソロ | 16:9 の画面を3段に積み、2小節ごとに上から順に切り替え。ソロに入ると3段ともトランペット |
+| `karaoke` | 2曲目 0:25–0:51 1番 | 縦全画面でメンバーを順に寄りで映し、歌詞を画面下に大きく表示 |
