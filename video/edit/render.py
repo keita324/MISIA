@@ -1,6 +1,6 @@
-"""Frame-by-frame renderer for the EDL in edl.py.
+"""Frame-by-frame renderer for an edit decision list (edl.py by default).
 
-usage: python3 render.py WIDE HAND OUT_DIR [--start S --end E] [--scale 0.5]
+usage: [EDL=edl_song2.py] python3 render.py WIDE HAND OUT_DIR [--start S --end E] [--scale 0.5]
 Renders the [start, end) slice to OUT_DIR/chunk_<start>.mp4 (video only).
 """
 import argparse
@@ -12,10 +12,18 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import edl  # noqa: E402
-
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def load_edl(path):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("edl", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+edl = load_edl(os.path.join(HERE, os.environ.get("EDL", "edl.py")))
 FONT = os.path.join(HERE, "fonts", "PressStart2P-Regular.ttf")
 
 
@@ -202,7 +210,8 @@ def render_texts(canvas, t):
         else:
             # text simply appears and disappears (no typewriter); type=True opts in
             s = typed(tx["text"], t, t0) if tx.get("type") else tx["text"]
-            draw_pixel_text(canvas, s, tx["pos"], tx["size"], alpha)
+            draw_pixel_text(canvas, s, tx["pos"], tx["size"], alpha,
+                            color=tx.get("color", (255, 255, 255)), glow=tx.get("glow", True))
     return canvas
 
 
@@ -265,6 +274,10 @@ def compose(shot, t, frames, out_w, out_h, scale):
             b = max(1, int(4 * S))
             d.rectangle([box[0] - b, box[1] - b, box[0] + box[2] + b - 1, box[1] + box[3] + b - 1], fill=(240, 240, 240))
             img.paste(p, (box[0], box[1]))
+        if shot.get("fadein") and t < shot["t0"] + shot["fadein"]:
+            img = Image.blend(Image.new("RGB", img.size), img, (t - shot["t0"]) / shot["fadein"])
+        if shot.get("fadeout") and t > shot["t1"] - shot["fadeout"]:
+            img = Image.blend(Image.new("RGB", img.size), img, max(0.0, (shot["t1"] - t) / shot["fadeout"]))
         if shot.get("outro"):
             o0, o1 = shot["outro"]
             if t >= o0:
