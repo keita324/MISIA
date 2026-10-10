@@ -3,7 +3,7 @@
 usage: python3 short_sax_relay.py WIDE HAND OUT.mp4 [--scale 0.5]
 
 Layout (top to bottom): title, the whole horn section (16:9), a close-up of the
-current soloist, then "PLAYER n  NAME" and three progress blocks.
+current soloist, then "PLAYER n" and three progress blocks.
 When everyone comes back in (4:06) the lower panel shows the whole band.
 Times are song-2 timeline times (wide camera), see edl_song2.py.
 """
@@ -24,10 +24,11 @@ OW, OH = 1080, 1920
 YELLOW, CYAN, PINK, WHITE = (255, 220, 60), (90, 235, 240), (255, 110, 190), (255, 255, 255)
 
 # soloist close-ups in the fixed camera: (centre x, centre y, height)
+# players 1-3 = SHIORI, TOWACO, KOTOMI (names are not shown in the Short)
 PLAYERS = [
-    dict(t0=187.0, t1=216.0, n=1, name="SHIORI", color=YELLOW, c=(1580, 690, 420)),
-    dict(t0=216.0, t1=234.0, n=2, name="TOWACO", color=CYAN, c=(1170, 700, 420)),
-    dict(t0=234.0, t1=246.0, n=3, name="KOTOMI", color=PINK, c=(1360, 690, 420)),
+    dict(t0=187.0, t1=216.0, n=1, color=YELLOW, c=(1580, 690, 420)),
+    dict(t0=216.0, t1=234.0, n=2, color=CYAN, c=(1170, 700, 420)),
+    dict(t0=234.0, t1=246.0, n=3, color=PINK, c=(1360, 690, 420)),
 ]
 CLEAR_AT = 246.0
 
@@ -72,8 +73,9 @@ def compose(t, frames, s):
     src_scale = frames["W"].width / edl.W
 
     # title
-    text(c, "SAX SOLO RELAY", ("center", 150), 64)
-    text(c, "FAILING IN A COOL WAY", ("center", 250), 26, CYAN, glow=False)
+    text(c, "LOUIS COLE", ("center", 80), 56)
+    text(c, "FAILING IN A COOL WAY", ("center", 165), 28, CYAN, glow=False)
+    text(c, "SAX SOLO RELAY", ("center", 250), 40, YELLOW)
 
     clear = t >= CLEAR_AT
     # top panel
@@ -103,7 +105,7 @@ def compose(t, frames, s):
             c = Image.blend(c, Image.new("RGB", c.size, WHITE), 0.6)
         if dt < 1.6:
             text(c, f"PLAYER {p['n']}", ("center", 1320), 84, p["color"])
-        text(c, f"P{p['n']}  {p['name']}", ("center", 1790), 52, p["color"])
+        text(c, f"PLAYER {p['n']}", ("center", 1790), 52, p["color"])
     else:
         text(c, "ALL PLAYERS", ("center", 1790), 44)
 

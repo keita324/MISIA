@@ -92,8 +92,8 @@ EDL=edl_song2.py ./build.sh 全体カメラ.MOV 手持ちカメラ.MOV out_song2
 python3 short_sax_relay.py 全体カメラ.MOV 手持ちカメラ.MOV short_sax_relay_vertical.mp4
 ```
 
-* 上: タイトル `SAX SOLO RELAY` / 曲名
+* 上: `LOUIS COLE` / 曲名 / `SAX SOLO RELAY`
 * 中: ホーン全体（全体カメラ・手持ちカメラを 4 小節ごとに切り替え）
 * 下: いまソロ中の人のアップ（ゆっくりズームイン）
-* 交代のたびに白フラッシュ + `PLAYER 1/2/3`、下に `P1 SHIORI` などと進行ゲージ
+* 交代のたびに白フラッシュ + `PLAYER 1/2/3`、下に `PLAYER 1` などと進行ゲージ（名前は出さない）
 * 4:06 で全員が戻ったら下の画面がバンド全体に切り替わる（文字なし）
