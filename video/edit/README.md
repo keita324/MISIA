@@ -20,7 +20,7 @@ Louis Cole「Live 2019」の1曲目の動画を参考に、全体カメラと手
 | 0:10 | `F IT UP / BY: LOUIS COLE` | 曲名と作曲者のクレジット（演奏曲そのものなので残した） |
 | 0:13–0:48 | ● `KEYBOARD PART` / ▶ / ● `KEYBOARD PART 2` / ▶ / ● `BASS` / ▶ | ループ録音の REC / PLAY 表示 |
 | 1:15 | `THROAT SLAP VOCAL RUN` | |
-| 1:17 | `YEAH` ×2 | 追加 |
+| 1:17 | `YEAH` ×2 | 追加（1:17.2 と 1:17.9、画面中央の同じ位置） |
 | 1:26 | `FF>>` | メンバー入場部分 |
 | 1:45 | `20 MINUTES LATER` | 表示中は音声を消す（`edl.py` の `MUTE`） |
 | 1:59 | `EVERYONE` | |
