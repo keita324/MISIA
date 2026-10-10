@@ -73,9 +73,9 @@ def compose(t, frames, s):
     src_scale = frames["W"].width / edl.W
 
     # title
-    text(c, "LOUIS COLE", ("center", 80), 56)
-    text(c, "FAILING IN A COOL WAY", ("center", 165), 28, CYAN, glow=False)
-    text(c, "SAX SOLO RELAY", ("center", 250), 40, YELLOW)
+    text(c, "LOUIS COLE", ("center", 60), 44)
+    text(c, "FAILING IN A COOL WAY", ("center", 150), 47, CYAN)
+    text(c, "SAX SOLO RELAY", ("center", 250), 36, YELLOW)
 
     clear = t >= CLEAR_AT
     # top panel

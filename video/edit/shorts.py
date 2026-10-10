@@ -6,6 +6,8 @@ NAME:
            big REC / PLAY and a LOOP counter
   stack    song 1 horn breakdown -> trumpet solo, three stacked 16:9 strips
   karaoke  song 2 verse 1, full-screen vertical with big lyrics
+  vocal    song 1 continued after "loop": singing -> FF>> (4x) -> 20 MINUTES LATER
+           -> band in, which splits the screen into three strips
 WIDE/HAND are the two cameras of that song (song 1 for loop/stack, song 2 for karaoke).
 """
 import argparse
@@ -81,10 +83,15 @@ def icon(c, pattern, cx, cy, cell, color, s):
     render.draw_icon(c, pattern, cx * k, cy * k, cell * k, color, 1.0)
 
 
+def song_size(song):
+    """Song titles as large as fit the 1080 width (Press Start 2P glyphs are square)."""
+    return min(72, 1000 // len(song))
+
+
 def title(c, song, s):
-    shade(c, 0, 230, 0.55, s)
-    text(c, "LOUIS COLE", ("center", 80), 56)
-    text(c, song, ("center", 165), 28, CYAN, glow=False)
+    shade(c, 0, 250, 0.55, s)
+    text(c, "LOUIS COLE", ("center", 70), 48)
+    text(c, song, ("center", 170), song_size(song), CYAN)
 
 
 # ------------------------------------------------------------------ 1. loop
@@ -169,10 +176,10 @@ def stack_frame(t, f, s):
         if t >= STACK_TRUMPET + 0.1 and j == 1:
             r = lerp(e.WR["trumpet"], e.WR["trumpet_tight"], phase(t, STACK_TRUMPET, STACK["t1"]))
         box(c, f[src], r, b, s)
-    text(c, "LOUIS COLE", ("center", 70), 52)
-    text(c, "F IT UP", ("center", 150), 28, CYAN, glow=False)
+    text(c, "LOUIS COLE", ("center", 55), 44)
+    text(c, "F IT UP", ("center", 135), song_size("F IT UP"), CYAN)
     label = "TRUMPET SOLO" if t >= STACK_TRUMPET else "HORN BREAKDOWN"
-    text(c, label, ("center", 215), 32, YELLOW)
+    text(c, label, ("center", 218), 30, YELLOW)
     return c
 
 
@@ -219,7 +226,81 @@ def karaoke_frame(t, f, s):
     return c
 
 
+# ------------------------------------------------------------------ 4. vocal
+# song 1 continued: singing (0:49) -> band walks on (fast-forwarded) ->
+# "20 MINUTES LATER" -> band in. Segments: (source start, source end, speed).
+VOCAL = dict(edl=SONG1, t0=49.0, t1=121.0, segments=[
+    (49.0, 84.0, 1),
+    (84.0, 105.6, 4),        # FF>> at 4x
+    (105.6, 107.6, 1),       # black card, muted
+    (107.8, 121.0, 1),
+])
+VOCAL_FF = (84.0, 105.6)
+VOCAL_CARD = (105.6, 107.6)
+VOCAL_BAND = 109.4
+# (start, end, src, centre-x, centre-y, height at start, height at end)
+VOCAL_SHOTS = [
+    (49.0, 55.0, "W", 1040, 600, 760, 640),
+    (55.0, 61.5, "H", 1100, 620, 820, 700),
+    (61.5, 65.0, "W", 1040, 560, 1000, 900),
+    (65.0, 71.5, "H", 1100, 600, 760, 620),
+    (71.5, 75.0, "W", 1040, 600, 700, 600),
+    (75.0, 77.2, "H", 1100, 560, 560, 500),   # vocal run: tight
+    (77.2, 79.5, "W", 1040, 560, 1000, 1000),
+    (79.5, 84.0, "H", 1100, 600, 640, 760),
+    (107.8, 109.4, "H", 960, 540, 1080, 1080),
+]
+VOCAL_STRIPS = [(0, 280, 1080, 540), (0, 840, 1080, 540), (0, 1380, 1080, 540)]
+VOCAL_BAND_SETS = [
+    [("H", "left2"), ("H", "center"), ("H", "horns")],
+    [("W", "keys"), ("H", "bass"), ("W", "horns")],
+    [("H", "horns"), ("W", "center"), ("H", "left2")],
+    [("H", "full"), ("H", "horns"), ("W", "bass")],
+]
+
+
+def vocal_frame(t, f, s):
+    e = SONG1
+    c = Image.new("RGB", (int(OW * s), int(OH * s)))
+    if VOCAL_CARD[0] <= t < VOCAL_CARD[1]:
+        text(c, "20 MINUTES LATER", ("center", 960), 56)
+        return c
+    if t >= VOCAL_BAND:
+        # band in: the screen splits into three strips, all changing every 2 bars
+        i = int((t - VOCAL_BAND) // 3.2)
+        for j, ((src, rn), b) in enumerate(zip(VOCAL_BAND_SETS[i % 4], VOCAL_STRIPS)):
+            rects = e.WR if src == "W" else e.HR
+            box(c, f[src], rects[rn], b, s)
+        c = flash(c, t, VOCAL_BAND, 0.15, 0.7)
+        text(c, "LOUIS COLE", ("center", 70), 48)
+        text(c, "F IT UP", ("center", 170), song_size("F IT UP"), CYAN)
+        if 119.2 <= t < 120.6:
+            text(c, "EVERYONE", ("center", 1110), 72)
+        return c
+    if VOCAL_FF[0] <= t < VOCAL_FF[1]:
+        # fast-forward: pan across the stage as the band walks on
+        k = (t - VOCAL_FF[0]) / (VOCAL_FF[1] - VOCAL_FF[0])
+        full(c, f["H"], vcrop(500 + 900 * k, 540, 1080), s)
+    else:
+        for a, b, src, cx, cy, h0, h1 in VOCAL_SHOTS:
+            if a <= t < b:
+                full(c, f[src], vcrop(cx, cy, h0 + (h1 - h0) * phase(t, a, b)), s)
+                c = flash(c, t, a, 0.06, 0.35)
+                break
+    title(c, "F IT UP", s)
+    if VOCAL_FF[0] <= t < VOCAL_FF[1]:
+        shade(c, 1600, 1920, 0.5, s)
+        text(c, "FF>>", ("center", 1740), 96, WHITE)
+    if 75.1 <= t < 77.1:
+        shade(c, 1560, 1840, 0.5, s)
+        text(c, "THROAT SLAP\nVOCAL RUN", ("center", 1700), 56, YELLOW)
+    if 77.2 <= t < 77.8 or 77.9 <= t < 78.7:
+        text(c, "YEAH", ("center", 1000), 120)
+    return c
+
+
 RECIPES = {
+    "vocal": (VOCAL, vocal_frame),
     "loop": (LOOP, loop_frame),
     "stack": (STACK, stack_frame),
     "karaoke": (KARAOKE, karaoke_frame),
@@ -239,30 +320,48 @@ def main():
     e, T0, T1 = cfg["edl"], cfg["t0"], cfg["t1"]
     s = a.scale
     ow, oh = int(OW * s) // 2 * 2, int(OH * s) // 2 * 2
-    wr = render.Reader(a.wide, T0, 1920, 1080)
-    hr = render.Reader(a.hand, T0 - e.HAND_OFFSET, 1920, 1080)
+    segments = cfg.get("segments", [(T0, T1, 1)])
     tmp = a.out + ".video.mp4"
     enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
                             "-s", f"{ow}x{oh}", "-r", str(FPS), "-i", "-",
                             "-c:v", "libx264", "-preset", "medium", "-crf", a.crf,
                             "-pix_fmt", "yuv420p", tmp], stdin=subprocess.PIPE)
-    n = int(round((T1 - T0) * FPS))
-    for i in range(n):
-        t = T0 + i / FPS
-        img = frame_fn(t, {"W": wr.read(), "H": hr.read()}, s)
-        if t > T1 - 0.6:
-            img = Image.blend(Image.new("RGB", img.size), img, max(0.0, (T1 - t) / 0.6))
-        if img.size != (ow, oh):
-            img = img.resize((ow, oh))
-        enc.stdin.write(img.tobytes())
+    dur = sum((b - a_) / sp for a_, b, sp in segments)
+    u = 0.0
+    for a0, a1, speed in segments:
+        wr = render.Reader(a.wide, a0, 1920, 1080)
+        hr = render.Reader(a.hand, a0 - e.HAND_OFFSET, 1920, 1080)
+        n = int(round((a1 - a0) / speed * FPS))
+        for i in range(n):
+            t = a0 + i * speed / FPS
+            for _ in range(speed - 1):   # fast-forward: skip frames
+                wr.read()
+                hr.read()
+            img = frame_fn(t, {"W": wr.read(), "H": hr.read()}, s)
+            if u > dur - 0.6:
+                img = Image.blend(Image.new("RGB", img.size), img, max(0.0, (dur - u) / 0.6))
+            if img.size != (ow, oh):
+                img = img.resize((ow, oh))
+            enc.stdin.write(img.tobytes())
+            u += 1 / FPS
+        wr.close()
+        hr.close()
     enc.stdin.close()
     enc.wait()
-    wr.close()
-    hr.close()
-    dur = T1 - T0
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", tmp, "-ss", str(T0), "-t", str(dur), "-i", a.wide,
-                    "-map", "0:v", "-map", "1:a", "-c:v", "copy",
-                    "-af", f"afade=t=in:d=0.2,afade=t=out:st={dur - 0.6}:d=0.6",
+    # audio: same segments, fast parts sped up (pitch kept) and quieter, mute ranges silenced
+    parts, labels = [], []
+    for i, (a0, a1, speed) in enumerate(segments):
+        f = f"[1:a]atrim={a0}:{a1},asetpts=PTS-STARTPTS"
+        if speed == 4:
+            f += ",atempo=2,atempo=2,volume=0.5"
+        if any(m0 < a1 and a0 < m1 for m0, m1 in getattr(e, "MUTE", [])):
+            f += ",volume=0"
+        parts.append(f + f"[a{i}]")
+        labels.append(f"[a{i}]")
+    fc = ";".join(parts) + ";" + "".join(labels) + f"concat=n={len(segments)}:v=0:a=1," \
+        f"afade=t=in:d=0.2,afade=t=out:st={dur - 0.6}:d=0.6[aout]"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", tmp, "-i", a.wide, "-filter_complex", fc,
+                    "-map", "0:v", "-map", "[aout]", "-c:v", "copy", "-t", f"{dur:.3f}",
                     "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", a.out], check=True)
     os.remove(tmp)
 
