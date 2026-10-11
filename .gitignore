@@ -1,0 +1,5 @@
+
+# ffmpeg two-pass logs
+*.log.temp
+*.log.mbtree.temp
+vlog-*
