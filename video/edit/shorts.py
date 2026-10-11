@@ -6,6 +6,7 @@ NAME:
            big REC / PLAY and a LOOP counter
   stack    song 1 horn breakdown -> trumpet solo, three stacked 16:9 strips
   karaoke  song 2 verse 1, full-screen vertical with big lyrics
+  band     song 1 finale (4:00-4:47), whole band on top + four close-ups
   vocal    song 1 continued after "loop": singing -> FF>> (4x) -> 20 MINUTES LATER
            -> band in, which splits the screen into three strips
 WIDE/HAND are the two cameras of that song (song 1 for loop/stack, song 2 for karaoke).
@@ -316,7 +317,73 @@ def vocal_frame(t, f, s):
     return c
 
 
+# ------------------------------------------------------------------ 5. band
+# song 1 finale, everyone playing (4:00-4:47): whole band on top, four
+# member close-ups below. The highlighted panel cycles every two bars.
+BAND = dict(edl=SONG1, t0=238.0, t1=287.0)
+BAND_TOP = (0, 280, 1080, 608)
+BAND_GRID = [(12, 910, 522, 470), (546, 910, 522, 470), (12, 1395, 522, 470), (546, 1395, 522, 470)]
+BAND_LABELS = ["KEYS", "BASS", "HORNS", "DRUMS"]
+BAND_HAND_END = 279.0          # handheld footage ends at 283.3; stay on the wide camera after this
+BAND_BLACK = (253.9, 254.25)   # short blackout -> drums -> split screen, as in the long edit
+BAND_DRUMS = (254.25, 255.6)
+BAND_BUDDIEZ = (255.6, 268.6)
+BAND_LOVE = (280.2, 281.8)
+BAND_KIT = (850, 538, 360, 324)    # drum kit in the handheld camera
+
+
+def band_frame(t, f, s):
+    e = SONG1
+    c = Image.new("RGB", (int(OW * s), int(OH * s)), (8, 8, 14))
+    if BAND_BLACK[0] <= t < BAND_BLACK[1]:
+        return c
+    if BAND_DRUMS[0] <= t < BAND_DRUMS[1]:
+        full(c, f["H"], vcrop(1030, 690, 520 - 60 * phase(t, *BAND_DRUMS)), s)
+        title(c, "F IT UP", s)
+        text(c, "DRUMS", ("center", 1700), 72, YELLOW)
+        return c
+    hand_ok = t < BAND_HAND_END
+    i = int((t - BAND["t0"]) // 3.2)
+    # top: alternate cameras, slow push in
+    top_src = "H" if hand_ok and i % 2 else "W"
+    top_r = lerp(e.WR["stage"] if top_src == "W" else e.HR["lower"],
+                 e.WR["center"] if top_src == "W" else e.HR["center"], 0.25 * phase(t, BAND["t0"] + i * 3.2,
+                                                                         BAND["t0"] + (i + 1) * 3.2))
+    if t >= BAND_LOVE[0]:
+        top_src, top_r = "W", e.WR["full"]
+    box(c, f[top_src], top_r, BAND_TOP, s)
+    # four close-ups; cameras swap every two bars
+    srcs = [("W", "keys"), ("H", "bass"), ("W", "horns_tight"), ("H", "kit")]
+    if i % 2:
+        srcs = [("H", "keys"), ("W", "bass_tight"), ("H", "horns_tight"), ("H", "kit")]
+    hl = 1 if BAND_BUDDIEZ[0] <= t < BAND_BUDDIEZ[1] else i % 4
+    d = ImageDraw.Draw(c)
+    for j, ((src, rn), b, lab) in enumerate(zip(srcs, BAND_GRID, BAND_LABELS)):
+        if not hand_ok:
+            src = "W"
+        if rn == "kit":   # drummer sits behind the saxes; the handheld sees the kit
+            r = BAND_KIT if src == "H" else e.WR["center"]
+        else:
+            r = (e.WR if src == "W" else e.HR).get(rn, e.WR[rn])
+        x, y, w, h = (int(v * s) for v in b)
+        if j == hl:
+            m = max(2, int(9 * s))
+            d.rectangle([x - m, y - m, x + w + m - 1, y + h + m - 1], fill=YELLOW)
+        box(c, f[src], r, b, s, border=j != hl)
+        text(c, lab, (b[0] + b[2] / 2, b[1] + b[3] - 40), 30, YELLOW if j == hl else WHITE)
+    c = flash(c, t, BAND["t0"] + i * 3.2, 0.06, 0.25)
+    text(c, "LOUIS COLE", ("center", 70), 48)
+    text(c, "F IT UP", ("center", 170), song_size("F IT UP"), CYAN)
+    if BAND_BUDDIEZ[0] <= t < BAND_BUDDIEZ[1]:
+        text(c, "BASSLINE BUDDIEZ", ("center", 600), 60, YELLOW)
+    if BAND_LOVE[0] <= t < BAND_LOVE[1]:
+        c = Image.blend(Image.new("RGB", c.size), c, 0.45)
+        text(c, "THEY LOVE IT", ("center", 960), 88)
+    return c
+
+
 RECIPES = {
+    "band": (BAND, band_frame),
     "vocal": (VOCAL, vocal_frame),
     "loop": (LOOP, loop_frame),
     "stack": (STACK, stack_frame),

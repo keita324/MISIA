@@ -108,6 +108,7 @@ python3 shorts.py loop    1曲目全体.MOV 1曲目手持ち.MOV short_loop_vert
 python3 shorts.py stack   1曲目全体.MOV 1曲目手持ち.MOV short_stack_vertical.mp4
 python3 shorts.py karaoke 2曲目全体.MOV 2曲目手持ち.MOV short_karaoke_vertical.mp4
 python3 shorts.py vocal   1曲目全体.MOV 1曲目手持ち.MOV short_vocal_vertical.mp4
+python3 shorts.py band    1曲目全体.MOV 1曲目手持ち.MOV short_band_vertical.mp4
 ```
 
 | 名前 | 場面 | レイアウト |
@@ -116,5 +117,6 @@ python3 shorts.py vocal   1曲目全体.MOV 1曲目手持ち.MOV short_vocal_ver
 | `stack` | 1曲目 3:23–3:54 HORN BREAKDOWN → トランペットソロ | 16:9 の画面を3段に積み、2小節ごとに上から順に切り替え。ソロに入ると3段ともトランペット |
 | `karaoke` | 2曲目 0:25–0:51 1番 | 縦全画面でメンバーを順に寄りで映し、歌詞を画面下に大きく表示 |
 | `vocal` | 1曲目 0:49–2:01（`loop` の続き） | 歌い出し → メンバー入場を実際に4倍速で `FF>>` → `20 MINUTES LATER`（無音）→ バンドインで画面が3段に割れる。約56秒 |
+| `band` | 1曲目 4:00–4:47 全員で演奏するラスト | 上にバンド全体、下に KEYS / BASS / HORNS / DRUMS の4画面。2小節ごとに光る枠が移る。4:14 で一瞬暗転 → ドラム → `BASSLINE BUDDIEZ`（BASS 枠が光る）→ `THEY LOVE IT`。約49秒 |
 
 曲名はどの Shorts も画面幅いっぱいまで大きく表示（`song_size()`）。
