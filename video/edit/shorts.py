@@ -99,16 +99,19 @@ def title(c, song, s):
 LOOP = dict(edl=SONG1, t0=10.0, t1=49.0)
 # (start, end, src, centre-x, centre-y, height at start, height at end)
 LOOP_SHOTS = [
-    (10.0, 13.6, "W", 900, 560, 1000, 860),
-    (13.6, 17.8, "W", 880, 600, 620, 460),     # REC: push in on hands
-    (17.8, 22.0, "H", 1000, 520, 1000, 900),
-    (22.0, 27.0, "W", 880, 600, 560, 440),     # REC
-    (27.0, 32.2, "H", 1000, 500, 900, 1000),
-    (32.2, 37.5, "W", 900, 560, 900, 760),
-    (37.5, 44.5, "W", 880, 600, 620, 480),     # REC bass
-    (44.5, 49.0, "H", 1000, 520, 1000, 1060),
+    (10.0, 14.0, "W", 900, 560, 1000, 860),
+    (14.0, 19.0, "W", 880, 600, 620, 460),     # REC: push in on hands
+    (19.0, 23.3, "H", 1000, 520, 1000, 900),
+    (23.3, 25.8, "W", 880, 560, 900, 900),     # PLAY: at the laptop
+    (25.8, 31.0, "W", 880, 600, 560, 440),     # REC
+    (31.0, 35.2, "H", 1000, 500, 900, 1000),
+    (35.2, 38.2, "W", 900, 560, 900, 760),     # countdown
+    (38.2, 44.4, "W", 880, 600, 620, 480),     # REC bass
+    (44.4, 49.0, "H", 1000, 520, 1000, 1060),
 ]
-LOOP_REC = [(13.6, 17.8, "KEYBOARD PART"), (22.0, 27.0, "KEYBOARD PART 2"), (37.5, 44.5, "BASS")]
+# REC only while he plays the keyboard (same timing as the horizontal edit)
+LOOP_REC = SONG1.REC
+LOOP_PLAY = [(a, b) for a, b, _ in SONG1.PLAY]
 
 
 def loop_frame(t, f, s):
@@ -128,7 +131,7 @@ def loop_frame(t, f, s):
             icon(c, render.PIX_DOT, 300, 1660, 12, RED, s)
         text(c, "REC", (480, 1660), 64, RED, glow=False)
         text(c, rec[2], ("center", 1770), 36)
-    elif t >= 13.6:
+    elif any(a <= t < b for a, b in LOOP_PLAY):
         icon(c, render.PIX_PLAY, 300, 1660, 12, GREEN, s)
         text(c, "PLAY", (500, 1660), 64, GREEN, glow=False)
     # loop counter: how many layers are stacked so far
@@ -139,6 +142,9 @@ def loop_frame(t, f, s):
         d.rectangle([x0, y0, x0 + int(90 * s), y0 + int(24 * s)], fill=YELLOW if i < n else (60, 60, 70))
     if n:
         text(c, f"LOOP x{n}", ("center", 1500), 40, YELLOW)
+    for a, b, d in SONG1.COUNTDOWN:
+        if a <= t < b:
+            text(c, d, ("center", 900), 220, glow=False)
     return c
 
 
@@ -288,6 +294,17 @@ def vocal_frame(t, f, s):
                 c = flash(c, t, a, 0.06, 0.35)
                 break
     title(c, "F IT UP", s)
+    if 49.1 <= t < 50.8:
+        a = min(1.0, (t - 49.1) / 0.15, (50.8 - t) / 0.5)
+        text(c, "LOUIS COLE", ("center", 900), 96, alpha=a)
+    for a, b, line in SONG1.LYRICS:
+        a, b = a + SONG1.LYRIC_SHIFT, b + SONG1.LYRIC_SHIFT
+        if a <= t < b and not VOCAL_FF[0] <= t < VOCAL_FF[1]:   # no lyrics under FF>>
+            shade(c, 1600, 1840, 0.5, s)
+            k = render.edl.W / OW
+            size = min(40, 900 // (len(line) + 4))
+            render.draw_lyric(c, line, 1720 * k, size * k, 1.0)
+            break
     if VOCAL_FF[0] <= t < VOCAL_FF[1]:
         shade(c, 1600, 1920, 0.5, s)
         text(c, "FF>>", ("center", 1740), 96, WHITE)

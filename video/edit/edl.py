@@ -186,17 +186,70 @@ MUTE = [(105.7, 107.7)]
 # How far a zoom travels from r0 towards r1 (1.0 = all the way).
 ZOOM_AMOUNT = 0.8
 
+# ---------------------------------------------------------------- intro / vocals
+# Times of the keyboard-playing parts, read from the footage (hands on keys).
+REC = [
+    (10.2, 23.3, "KEYBOARD PART"),
+    (25.8, 38.2, "KEYBOARD PART 2"),
+    (38.2, 44.4, "BASS"),
+]
+PLAY = [
+    (23.3, 25.8, {}),
+    (44.4, 48.5, {"fade": 1.2}),
+]
+COUNTDOWN = [(35.2, 36.0, "4"), (36.0, 36.8, "3"), (36.8, 37.6, "2"), (37.6, 38.2, "1")]
+
+# Lyrics as shown in the Louis Cole live-session reference (reference time).
+# This performance runs 6.2 s behind that recording all the way through.
+LYRIC_SHIFT = 6.22
+LYRICS = [
+    (45.5, 46.5, "IF LIFE IS ASKING,"),
+    (46.5, 47.25, "HERE'S WHAT'S UP:"),
+    (47.25, 48.0, "I WOULD RATHER"),
+    (48.0, 48.75, "F--- IT UP"),
+    (49.0, 49.75, "EASY, SAFE, AND"),
+    (49.75, 50.5, "DREAMS WITH DUST"),
+    (50.5, 51.5, "I WOULD RATHER"),
+    (51.5, 52.25, "F--- IT UP"),
+    (52.25, 53.0, "IF LIFE IS ASKING,"),
+    (53.0, 54.0, "HERE'S WHAT'S UP:"),
+    (54.0, 54.75, "I WOULD RATHER"),
+    (54.75, 55.5, "F--- IT UP"),
+    (55.75, 56.5, "EASY, SAFE, AND"),
+    (56.5, 57.25, "DREAMS WITH DUST"),
+    (57.25, 58.0, "I WOULD RATHER"),
+    (58.0, 58.75, "F--- IT UP"),
+    (59.0, 60.25, "I DON'T KNOW WHAT I'M DOING"),
+    (60.25, 61.5, "BUT I WANT TO LIVE"),
+    (62.25, 63.5, "I DON'T KNOW WHAT I'M DOING"),
+    (63.5, 65.0, "BUT I WANT TO-O-O-O LIVE"),
+    (65.75, 66.75, "I DON'T KNOW WHAT I'M DOING"),
+    (66.75, 68.25, "BUT I WANT TO LIVE"),
+    (72.25, 73.25, "IF LIFE IS ASKING,"),
+    (73.25, 74.0, "HERE'S WHAT'S UP:"),
+    (74.0, 74.75, "I WOULD RATHER"),
+    (74.75, 75.5, "F--- IT UP"),
+    (75.75, 76.5, "EASY, SAFE, AND"),
+    (76.5, 77.25, "DREAMS WITH DUST"),
+    (77.25, 78.0, "I WOULD RATHER"),
+    (78.0, 79.75, "F--- IT UUUUUUUU..."),
+    (79.75, 84.5, "UUUUUUUU..."),
+]
+
 # ---------------------------------------------------------------- text
 # style: "center" / "bottomleft" / "rec" / "play" / "label"
 TEXTS = [
     dict(t0=1.4, t1=7.2, text="2026", pos=("center", 540), size=56),
-    dict(t0=10.4, t1=13.4, text="F IT UP\nBY: LOUIS COLE", pos=("left", 900), size=40),
-    dict(t0=13.6, t1=17.8, kind="rec", text="KEYBOARD PART", text_until=16.0),
-    dict(t0=17.8, t1=22.0, kind="play"),
-    dict(t0=22.0, t1=27.0, kind="rec", text="KEYBOARD PART 2", text_until=24.6),
-    dict(t0=27.0, t1=37.5, kind="play"),
-    dict(t0=37.5, t1=44.5, kind="rec", text="BASS", text_until=40.2),
-    dict(t0=44.5, t1=48.5, kind="play", fade=1.2),
+    dict(t0=10.4, t1=13.4, text="F IT UP\nBY: LOUIS COLE", pos=("left", 760), size=40),
+    # REC (red) only while the singer is actually playing the keyboard,
+    # PLAY (green) while he is at the laptop / walking to the mic
+    *[dict(t0=a, t1=b, kind="rec", text=x) for a, b, x in REC],
+    *[dict(t0=a, t1=b, kind="play", **kw) for a, b, kw in PLAY],
+    # 4-3-2-1 countdown before the bass part (reference 0:29-0:32, +6.2 s)
+    *[dict(t0=a, t1=b, text=d, pos=("center", 500), size=112, glow=False)
+      for a, b, d in COUNTDOWN],
+    dict(t0=49.1, t1=50.8, text="LOUIS COLE", pos=("center", 520), size=64, fadein=0.15, fade=0.5),
+    *[dict(t0=a + LYRIC_SHIFT, t1=b + LYRIC_SHIFT, kind="lyric", text=x) for a, b, x in LYRICS],
     dict(t0=75.1, t1=77.1, text="THROAT SLAP VOCAL RUN", pos=("center", 800), size=40),
     dict(t0=77.2, t1=77.8, text="YEAH", pos=("center", 540), size=56),
     dict(t0=77.9, t1=78.7, text="YEAH", pos=("center", 540), size=56),

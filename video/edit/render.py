@@ -169,6 +169,25 @@ PIX_PLAY = [
     "####....",
     "##......",
 ]
+PIX_NOTE = [
+    "...####.",
+    "...#..#.",
+    "...#..#.",
+    "...#..#.",
+    ".###.##.",
+    "########",
+    "####.###",
+    ".##..##.",
+]
+LYRIC_RED = (225, 35, 45)
+
+
+def draw_lyric(canvas, text, y, size, alpha):
+    """Reference-style lyric: red text between two little notes."""
+    draw_pixel_text(canvas, text, ("center", y), size, alpha, color=LYRIC_RED, glow=False)
+    half = len(text) * size / 2 + size * 1.2
+    for cx in (edl.W / 2 - half, edl.W / 2 + half):
+        draw_icon(canvas, PIX_NOTE, cx, y, size / 6, LYRIC_RED, alpha)
 
 
 def draw_icon(canvas, pattern, cx, cy, cell, color, alpha):
@@ -200,6 +219,8 @@ def render_texts(canvas, t):
         alpha = 1.0
         if fade and t > t1 - fade:
             alpha = (t1 - t) / fade
+        if tx.get("fadein") and t < t0 + tx["fadein"]:
+            alpha = min(alpha, (t - t0) / tx["fadein"])
         kind = tx.get("kind", "text")
         if kind == "rec":
             draw_icon(canvas, PIX_DOT, 150, 950, 7, (230, 20, 30), alpha)
@@ -207,6 +228,8 @@ def render_texts(canvas, t):
                 _left_text(canvas, tx["text"], 200, 950, 32, alpha, (235, 30, 40))
         elif kind == "play":
             draw_icon(canvas, PIX_PLAY, 150, 950, 7, (40, 235, 60), alpha)
+        elif kind == "lyric":
+            draw_lyric(canvas, tx["text"], tx.get("y", 985), tx.get("size", 40), alpha)
         else:
             # text simply appears and disappears (no typewriter); type=True opts in
             s = typed(tx["text"], t, t0) if tx.get("type") else tx["text"]
