@@ -34,8 +34,11 @@ CLEAR_AT = 246.0
 
 # top panel: alternate the two cameras every 4 bars (6.4 s at 150 bpm)
 TOP_SHOTS = [("W", "horns"), ("H", "saxes")]
-TOP_BOX = (40, 330, 1000, 562)
-SOLO_BOX = (40, 940, 1000, 760)
+# everything sits inside the area YouTube Shorts leaves visible (y 280-1480,
+# lower text left of the button column)
+TOP_BOX = (60, 525, 960, 400)
+SOLO_BOX = (60, 945, 960, 420)
+LOW_CX = 470
 
 
 def player_at(t):
@@ -73,9 +76,9 @@ def compose(t, frames, s):
     src_scale = frames["W"].width / edl.W
 
     # title
-    text(c, "LOUIS COLE", ("center", 60), 44)
-    text(c, "FAILING IN A COOL WAY", ("center", 150), 47, CYAN)
-    text(c, "SAX SOLO RELAY", ("center", 250), 36, YELLOW)
+    text(c, "LOUIS COLE", ("center", 320), 44)
+    text(c, "FAILING IN A COOL WAY", ("center", 400), 42, CYAN)
+    text(c, "SAX SOLO RELAY", ("center", 475), 32, YELLOW)
 
     clear = t >= CLEAR_AT
     # top panel
@@ -104,17 +107,17 @@ def compose(t, frames, s):
         if dt < 0.12 and p["n"] > 1:
             c = Image.blend(c, Image.new("RGB", c.size, WHITE), 0.6)
         if dt < 1.6:
-            text(c, f"PLAYER {p['n']}", ("center", 1320), 84, p["color"])
-        text(c, f"PLAYER {p['n']}", ("center", 1790), 52, p["color"])
+            text(c, f"PLAYER {p['n']}", ("center", 1150), 84, p["color"])
+        text(c, f"PLAYER {p['n']}", (LOW_CX, 1410), 44, p["color"])
     else:
-        text(c, "ALL PLAYERS", ("center", 1790), 44)
+        text(c, "ALL PLAYERS", (LOW_CX, 1410), 40)
 
     # progress blocks
     d = ImageDraw.Draw(c)
     for i, q in enumerate(PLAYERS):
         done = t >= q["t0"]
-        x0 = int((360 + i * 130) * s)
-        y0 = int(1860 * s)
+        x0 = int((275 + i * 135) * s)
+        y0 = int(1450 * s)
         col = q["color"] if done else (60, 60, 70)
         d.rectangle([x0, y0, x0 + int(100 * s), y0 + int(24 * s)], fill=col)
 

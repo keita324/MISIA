@@ -120,3 +120,12 @@ python3 shorts.py band    1曲目全体.MOV 1曲目手持ち.MOV short_band_vert
 | `band` | 1曲目 4:00–4:47 全員で演奏するラスト | 上にバンド全体、下に KEYS / BASS / HORNS / DRUMS の4画面。2小節ごとに光る枠が移る。4:14 で一瞬暗転 → ドラム → `BASSLINE BUDDIEZ`（BASS 枠が光る）→ `THEY LOVE IT`。約49秒 |
 
 曲名はどの Shorts も画面幅いっぱいまで大きく表示（`song_size()`）。
+
+### YouTube Shorts の UI に隠れない配置
+
+YouTube アプリでは、上（時刻・検索/メニュー）、下（チャンネル名・タイトル・共有ボタン）、右下（高評価などのボタン列）が動画に重なり、左右も約 47px 切れる。
+実機スクリーンショットから測った範囲で、文字と顔はすべて次の中に収めている。
+
+* 縦: y = 280〜1480（1920 のうち）
+* y > 1000 の文字は x = 470 を中心に配置し、右のボタン列（x > 880）に掛からないようにする
+* 定数は `shorts.py` の `SAFE_TOP` / `SAFE_BOTTOM` / `LOW_CX` / `STRIPS3`

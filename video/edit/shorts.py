@@ -56,9 +56,27 @@ def full(c, frame, rect, s):
     c.paste(render.sharpen(img), (0, 0))
 
 
+# YouTube Shorts covers the top (status bar, search/menu icons), the bottom
+# (channel, title, share button) and the right-hand button column, and crops
+# about 47 px off each side. Text and faces stay inside this zone.
+SAFE_TOP, SAFE_BOTTOM = 280, 1480
+LOW_CX = 470            # centre for text below y=1000 (keeps it left of the buttons)
+STRIPS3 = [(0, 495, 1080, 355), (0, 860, 1080, 355), (0, 1225, 1080, 355)]
+
+
+def fit_upper(rect, aspect, anchor=0.35):
+    """Like fit_aspect, but when cutting height keep the upper part (faces)."""
+    x, y, w, h = rect
+    if w / h > aspect:
+        nw = h * aspect
+        return (x + (w - nw) / 2, y, nw, h)
+    nh = w / aspect
+    return (x, y + (h - nh) * anchor, w, nh)
+
+
 def box(c, frame, rect, b, s, border=True):
     x, y, w, h = (int(v * s) for v in b)
-    rect = render.fit_aspect(rect, w / h)
+    rect = fit_upper(rect, w / h)
     img = render.sharpen(render.grab(frame, rect, (w, h), frame.width / 1920))
     if border:
         e = max(1, int(5 * s))
@@ -85,14 +103,17 @@ def icon(c, pattern, cx, cy, cell, color, s):
 
 
 def song_size(song):
-    """Song titles as large as fit the 1080 width (Press Start 2P glyphs are square)."""
-    return min(72, 1000 // len(song))
+    """Song titles as large as fit the visible width (Press Start 2P glyphs are square)."""
+    return min(72, 900 // len(song))
 
 
-def title(c, song, s):
-    shade(c, 0, 250, 0.55, s)
-    text(c, "LOUIS COLE", ("center", 70), 48)
-    text(c, song, ("center", 170), song_size(song), CYAN)
+def title(c, song, s, sub=None):
+    """Title block just below the YouTube top bar."""
+    shade(c, SAFE_TOP - 20, SAFE_TOP + 200 + (50 if sub else 0), 0.55, s)
+    text(c, "LOUIS COLE", ("center", SAFE_TOP + 40), 48)
+    text(c, song, ("center", SAFE_TOP + 130), song_size(song), CYAN)
+    if sub:
+        text(c, sub, ("center", SAFE_TOP + 215), 30, YELLOW)
 
 
 # ------------------------------------------------------------------ 1. loop
@@ -125,24 +146,24 @@ def loop_frame(t, f, s):
             break
     title(c, "F IT UP", s)
     rec = next((r for r in LOOP_REC if r[0] <= t < r[1]), None)
-    shade(c, 1560, 1920, 0.6, s)
+    shade(c, 1150, 1500, 0.6, s)
     if rec:
         # blinking REC
         if int((t - rec[0]) * 2) % 2 == 0:
-            icon(c, render.PIX_DOT, 300, 1660, 12, RED, s)
-        text(c, "REC", (480, 1660), 64, RED, glow=False)
-        text(c, rec[2], ("center", 1770), 36)
+            icon(c, render.PIX_DOT, 250, 1290, 12, RED, s)
+        text(c, "REC", (420, 1290), 64, RED, glow=False)
+        text(c, rec[2], (LOW_CX, 1385), 36)
     elif any(a <= t < b for a, b in LOOP_PLAY):
-        icon(c, render.PIX_PLAY, 300, 1660, 12, GREEN, s)
-        text(c, "PLAY", (500, 1660), 64, GREEN, glow=False)
+        icon(c, render.PIX_PLAY, 250, 1290, 12, GREEN, s)
+        text(c, "PLAY", (440, 1290), 64, GREEN, glow=False)
     # loop counter: how many layers are stacked so far
     n = sum(1 for r in LOOP_REC if t >= r[1])
     d = ImageDraw.Draw(c)
     for i in range(3):
-        x0, y0 = int((390 + i * 110) * s), int(1850 * s)
+        x0, y0 = int((305 + i * 110) * s), int(1445 * s)
         d.rectangle([x0, y0, x0 + int(90 * s), y0 + int(24 * s)], fill=YELLOW if i < n else (60, 60, 70))
     if n:
-        text(c, f"LOOP x{n}", ("center", 1500), 40, YELLOW)
+        text(c, f"LOOP x{n}", (LOW_CX, 1195), 40, YELLOW)
     for a, b, d in SONG1.COUNTDOWN:
         if a <= t < b:
             text(c, d, ("center", 900), 220, glow=False)
@@ -151,7 +172,7 @@ def loop_frame(t, f, s):
 
 # ------------------------------------------------------------------ 2. stack
 STACK = dict(edl=SONG1, t0=203.4, t1=234.0)
-STRIPS = [(0, 250, 1080, 540), (0, 810, 1080, 540), (0, 1370, 1080, 540)]
+STRIPS = STRIPS3
 # every 3.2 s (two bars) the three strips get a new set of shots
 STACK_SETS = [
     [("W", "horns"), ("H", "bass"), ("W", "keys")],
@@ -183,10 +204,8 @@ def stack_frame(t, f, s):
         if t >= STACK_TRUMPET + 0.1 and j == 1:
             r = lerp(e.WR["trumpet"], e.WR["trumpet_tight"], phase(t, STACK_TRUMPET, STACK["t1"]))
         box(c, f[src], r, b, s)
-    text(c, "LOUIS COLE", ("center", 55), 44)
-    text(c, "F IT UP", ("center", 135), song_size("F IT UP"), CYAN)
     label = "TRUMPET SOLO" if t >= STACK_TRUMPET else "HORN BREAKDOWN"
-    text(c, label, ("center", 218), 30, YELLOW)
+    title(c, "F IT UP", s, label)
     return c
 
 
@@ -224,11 +243,11 @@ def karaoke_frame(t, f, s):
             full(c, f[src], vcrop(cx, cy, h0 + (h1 - h0) * phase(t, a, b)), s)
             break
     title(c, "FAILING IN A COOL WAY", s)
-    shade(c, 1260, 1760, 0.55, s)
+    shade(c, 1140, 1490, 0.55, s)
     for a, b, line in e.VERSE1:
         a, b = a + e.VERSE1_SHIFT, b + e.VERSE1_SHIFT
         if a <= t < b:
-            text(c, wrap(line), ("center", 1510), 60, CYAN)
+            text(c, wrap(line), (LOW_CX, 1315), 60, CYAN)
             break
     return c
 
@@ -257,7 +276,7 @@ VOCAL_SHOTS = [
     (79.5, 84.0, "H", 1100, 600, 640, 760),
     (107.8, 109.4, "H", 960, 540, 1080, 1080),
 ]
-VOCAL_STRIPS = [(0, 280, 1080, 540), (0, 840, 1080, 540), (0, 1380, 1080, 540)]
+VOCAL_STRIPS = STRIPS3
 VOCAL_BAND_SETS = [
     [("H", "left2"), ("H", "center"), ("H", "horns")],
     [("W", "keys"), ("H", "bass"), ("W", "horns")],
@@ -279,10 +298,9 @@ def vocal_frame(t, f, s):
             rects = e.WR if src == "W" else e.HR
             box(c, f[src], rects[rn], b, s)
         c = flash(c, t, VOCAL_BAND, 0.15, 0.7)
-        text(c, "LOUIS COLE", ("center", 70), 48)
-        text(c, "F IT UP", ("center", 170), song_size("F IT UP"), CYAN)
+        title(c, "F IT UP", s)
         if 119.2 <= t < 120.6:
-            text(c, "EVERYONE", ("center", 1110), 72)
+            text(c, "EVERYONE", ("center", 1040), 72)
         return c
     if VOCAL_FF[0] <= t < VOCAL_FF[1]:
         # fast-forward: pan across the stage as the band walks on
@@ -301,17 +319,24 @@ def vocal_frame(t, f, s):
     for a, b, line in SONG1.LYRICS:
         a, b = a + SONG1.LYRIC_SHIFT, b + SONG1.LYRIC_SHIFT
         if a <= t < b and not VOCAL_FF[0] <= t < VOCAL_FF[1]:   # no lyrics under FF>>
-            shade(c, 1600, 1840, 0.5, s)
+            shade(c, 1300, 1470, 0.5, s)
             k = render.edl.W / OW
-            size = min(40, 900 // (len(line) + 4))
-            render.draw_lyric(c, line, 1720 * k, size * k, 1.0)
+            size = min(40, 760 // (len(line) + 4))
+            lyr = Image.new("RGB", c.size)
+            mask = Image.new("L", c.size)
+            render.draw_lyric(lyr, line, 1385 * k, size * k, 1.0)
+            # draw_lyric centres on the frame; shift it left of the button column
+            dx = int((LOW_CX - OW / 2) * s)
+            m = lyr.convert("L").point(lambda v: 255 if v > 8 else 0)
+            c.paste(lyr.transform(c.size, Image.AFFINE, (1, 0, -dx, 0, 1, 0)), (0, 0),
+                    m.transform(c.size, Image.AFFINE, (1, 0, -dx, 0, 1, 0)))
             break
     if VOCAL_FF[0] <= t < VOCAL_FF[1]:
-        shade(c, 1600, 1920, 0.5, s)
-        text(c, "FF>>", ("center", 1740), 96, WHITE)
+        shade(c, 1250, 1470, 0.5, s)
+        text(c, "FF>>", (LOW_CX, 1360), 96, WHITE)
     if 75.1 <= t < 77.1:
-        shade(c, 1560, 1840, 0.5, s)
-        text(c, "THROAT SLAP\nVOCAL RUN", ("center", 1700), 56, YELLOW)
+        shade(c, 1230, 1480, 0.5, s)
+        text(c, "THROAT SLAP\nVOCAL RUN", (LOW_CX, 1355), 56, YELLOW)
     if 77.2 <= t < 77.8 or 77.9 <= t < 78.7:
         text(c, "YEAH", ("center", 1000), 120)
     return c
@@ -321,8 +346,8 @@ def vocal_frame(t, f, s):
 # song 1 finale, everyone playing (4:00-4:47): whole band on top, four
 # member close-ups below. The highlighted panel cycles every two bars.
 BAND = dict(edl=SONG1, t0=238.0, t1=287.0)
-BAND_TOP = (0, 280, 1080, 608)
-BAND_GRID = [(12, 910, 522, 470), (546, 910, 522, 470), (12, 1395, 522, 470), (546, 1395, 522, 470)]
+BAND_TOP = (0, 495, 1080, 450)
+BAND_GRID = [(12, 960, 522, 268), (546, 960, 522, 268), (12, 1240, 522, 268), (546, 1240, 522, 268)]
 BAND_LABELS = ["KEYS", "BASS", "HORNS", "DRUMS"]
 BAND_HAND_END = 279.0          # handheld footage ends at 283.3; stay on the wide camera after this
 BAND_BLACK = (253.9, 254.25)   # short blackout -> drums -> split screen, as in the long edit
@@ -340,7 +365,8 @@ def band_frame(t, f, s):
     if BAND_DRUMS[0] <= t < BAND_DRUMS[1]:
         full(c, f["H"], vcrop(1030, 690, 520 - 60 * phase(t, *BAND_DRUMS)), s)
         title(c, "F IT UP", s)
-        text(c, "DRUMS", ("center", 1700), 72, YELLOW)
+        shade(c, 1270, 1450, 0.5, s)
+        text(c, "DRUMS", (LOW_CX, 1360), 72, YELLOW)
         return c
     hand_ok = t < BAND_HAND_END
     i = int((t - BAND["t0"]) // 3.2)
@@ -370,12 +396,12 @@ def band_frame(t, f, s):
             m = max(2, int(9 * s))
             d.rectangle([x - m, y - m, x + w + m - 1, y + h + m - 1], fill=YELLOW)
         box(c, f[src], r, b, s, border=j != hl)
-        text(c, lab, (b[0] + b[2] / 2, b[1] + b[3] - 40), 30, YELLOW if j == hl else WHITE)
+        # label in the panel's top-left corner (bottom-right is under the buttons)
+        text(c, lab, (b[0] + 24 + len(lab) * 13, b[1] + 30), 26, YELLOW if j == hl else WHITE)
     c = flash(c, t, BAND["t0"] + i * 3.2, 0.06, 0.25)
-    text(c, "LOUIS COLE", ("center", 70), 48)
-    text(c, "F IT UP", ("center", 170), song_size("F IT UP"), CYAN)
+    title(c, "F IT UP", s)
     if BAND_BUDDIEZ[0] <= t < BAND_BUDDIEZ[1]:
-        text(c, "BASSLINE BUDDIEZ", ("center", 600), 60, YELLOW)
+        text(c, "BASSLINE BUDDIEZ", ("center", 720), 56, YELLOW)
     if BAND_LOVE[0] <= t < BAND_LOVE[1]:
         c = Image.blend(Image.new("RGB", c.size), c, 0.45)
         text(c, "THEY LOVE IT", ("center", 960), 88)
