@@ -366,15 +366,9 @@ def vocal_frame(t, f, s):
         if a <= t < b and not VOCAL_FF[0] <= t < VOCAL_FF[1]:   # no lyrics under FF>>
             shade(c, 1300, 1470, 0.5, s)
             k = render.edl.W / OW
-            size = min(40, 760 // (len(line) + 4))
-            lyr = Image.new("RGB", c.size)
-            mask = Image.new("L", c.size)
-            render.draw_lyric(lyr, line, 1385 * k, size * k, 1.0)
-            # draw_lyric centres on the frame; shift it left of the button column
-            dx = int((LOW_CX - OW / 2) * s)
-            m = lyr.convert("L").point(lambda v: 255 if v > 8 else 0)
-            c.paste(lyr.transform(c.size, Image.AFFINE, (1, 0, -dx, 0, 1, 0)), (0, 0),
-                    m.transform(c.size, Image.AFFINE, (1, 0, -dx, 0, 1, 0)))
+            # centred; narrow enough (incl. the notes) to stay left of the buttons at x > 880
+            size = min(40, 680 // (len(line) + 4))
+            render.draw_lyric(c, line, 1385 * k, size * k, 1.0)
             break
     if VOCAL_FF[0] <= t < VOCAL_FF[1]:
         shade(c, 1250, 1470, 0.5, s)
