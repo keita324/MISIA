@@ -279,15 +279,21 @@ VOCAL_SHOTS = [
     (107.8, 109.4, "H", 960, 540, 1080, 1080),
 ]
 VOCAL_STRIPS = STRIPS3
+# Each strip always shows a different part of the stage (L = keys + bass,
+# C = flute + drums, R = saxes), and the cameras alternate, so no two
+# strips show the same thing at the same time.
+STAGE_PARTS = {
+    ("W", "L"): (150, 430, 720, 237), ("W", "C"): (900, 400, 600, 197), ("W", "R"): (1240, 470, 680, 224),
+    ("H", "L"): (0, 450, 970, 320), ("H", "C"): (900, 450, 600, 197), ("H", "R"): (1150, 500, 770, 253),
+}
 VOCAL_BAND_SETS = [
-    [("H", "left2"), ("H", "center"), ("H", "horns")],
-    [("W", "keys"), ("H", "bass"), ("W", "horns")],
-    [("H", "horns"), ("W", "center"), ("H", "left2")],
-    [("H", "full"), ("H", "horns"), ("W", "bass")],
+    [("W", "L"), ("H", "C"), ("W", "R")],
+    [("H", "R"), ("W", "L"), ("H", "C")],
+    [("W", "C"), ("H", "R"), ("H", "L")],
+    [("H", "L"), ("W", "R"), ("W", "C")],
 ]
 
 
-VOCAL_FBA = (109.4, 111.8)
 # name cards, same timing as the horizontal edit (KAZUHO = keys, IZUSHUN = bass)
 VOCAL_SOLO = (131.8, 144.0)
 KAZ_W = (130, 420, 440, 300)      # keys player in the wide camera
@@ -303,25 +309,22 @@ def vocal_names(t, f, s):
         c = flash(c, t, 131.8)
         title(c, "F IT UP", s)
         if 133.4 <= t < 135.4:
-            shade(c, 1250, 1460, 0.5, s)
-            text(c, "KAZUHO", (LOW_CX, 1355), 88, YELLOW)
+            text(c, "KAZUHO", ("center", 1355), 88)
     elif t < 139.0:                                  # IZUSHUN
         full(c, f["H"], vcrop(615, 690, 640 - 80 * phase(t, 135.8, 139.0)), s)
         c = flash(c, t, 135.8)
         title(c, "F IT UP", s)
         if 136.8 <= t < 138.8:
-            shade(c, 1250, 1460, 0.5, s)
-            text(c, "IZUSHUN", (LOW_CX, 1355), 88, YELLOW)
+            text(c, "IZUSHUN", ("center", 1355), 88)
     else:                                            # both, stacked
         box(c, f["W"], KAZ_W, NAME_TOP, s)
         box(c, f["H"], IZU_H, NAME_BOTTOM, s)
         c = flash(c, t, 139.0)
         title(c, "F IT UP", s)
         if 139.8 <= t < 142.2:
-            text(c, "KAZUHO", ("center", 900), 64, YELLOW)
-            shade(c, 960, 1050, 0.6, s)
+            text(c, "KAZUHO", ("center", 900), 64)
             text(c, "AND", ("center", 1003), 40)
-            text(c, "IZUSHUN", (LOW_CX, 1410), 64, YELLOW)
+            text(c, "IZUSHUN", ("center", 1410), 64)
     return c
 
 
@@ -336,17 +339,13 @@ def vocal_frame(t, f, s):
     if t >= VOCAL_BAND:
         # band in: the screen splits into three strips, all changing every 2 bars
         i = int((t - VOCAL_BAND) // 3.2)
-        for j, ((src, rn), b) in enumerate(zip(VOCAL_BAND_SETS[i % 4], VOCAL_STRIPS)):
-            rects = e.WR if src == "W" else e.HR
-            box(c, f[src], rects[rn], b, s)
+        for j, ((src, part), b) in enumerate(zip(VOCAL_BAND_SETS[i % 4], VOCAL_STRIPS)):
+            box(c, f[src], STAGE_PARTS[(src, part)], b, s)
         c = flash(c, t, VOCAL_BAND, 0.15, 0.7)
         title(c, "F IT UP", s)
         if 119.2 <= t < 120.6:
             text(c, "EVERYONE", ("center", 1040), 72)
-        if VOCAL_FBA[0] <= t < VOCAL_FBA[1]:
-            # as in the Louis Cole live-session reference at the band entry
-            shade(c, 930, 1150, 0.6, s)
-            text(c, "FULL BAND\nACTIVATED", ("center", 1040), 72, render.LYRIC_RED, glow=False)
+
         return c
     if VOCAL_FF[0] <= t < VOCAL_FF[1]:
         # fast-forward: pan across the stage as the band walks on
