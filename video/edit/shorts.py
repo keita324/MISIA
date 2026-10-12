@@ -287,12 +287,52 @@ VOCAL_BAND_SETS = [
 ]
 
 
+VOCAL_FBA = (109.4, 111.8)
+# name cards, same timing as the horizontal edit (KAZUHO = keys, IZUSHUN = bass)
+VOCAL_SOLO = (131.8, 144.0)
+KAZ_W = (130, 420, 440, 300)      # keys player in the wide camera
+IZU_H = (380, 440, 480, 330)      # bass player in the handheld camera
+NAME_TOP = (0, 495, 1080, 500)
+NAME_BOTTOM = (0, 1005, 1080, 500)
+
+
+def vocal_names(t, f, s):
+    c = Image.new("RGB", (int(OW * s), int(OH * s)), (8, 8, 14))
+    if t < 135.8:                                    # KAZUHO
+        full(c, f["W"], vcrop(345, 600, 600 - 80 * phase(t, 131.8, 135.8)), s)
+        c = flash(c, t, 131.8)
+        title(c, "F IT UP", s)
+        if 133.4 <= t < 135.4:
+            shade(c, 1250, 1460, 0.5, s)
+            text(c, "KAZUHO", (LOW_CX, 1355), 88, YELLOW)
+    elif t < 139.0:                                  # IZUSHUN
+        full(c, f["H"], vcrop(615, 690, 640 - 80 * phase(t, 135.8, 139.0)), s)
+        c = flash(c, t, 135.8)
+        title(c, "F IT UP", s)
+        if 136.8 <= t < 138.8:
+            shade(c, 1250, 1460, 0.5, s)
+            text(c, "IZUSHUN", (LOW_CX, 1355), 88, YELLOW)
+    else:                                            # both, stacked
+        box(c, f["W"], KAZ_W, NAME_TOP, s)
+        box(c, f["H"], IZU_H, NAME_BOTTOM, s)
+        c = flash(c, t, 139.0)
+        title(c, "F IT UP", s)
+        if 139.8 <= t < 142.2:
+            text(c, "KAZUHO", ("center", 900), 64, YELLOW)
+            shade(c, 960, 1050, 0.6, s)
+            text(c, "AND", ("center", 1003), 40)
+            text(c, "IZUSHUN", (LOW_CX, 1410), 64, YELLOW)
+    return c
+
+
 def vocal_frame(t, f, s):
     e = SONG1
     c = Image.new("RGB", (int(OW * s), int(OH * s)))
     if VOCAL_CARD[0] <= t < VOCAL_CARD[1]:
         text(c, "20 MINUTES LATER", ("center", 960), 56)
         return c
+    if t >= VOCAL_BAND and VOCAL_SOLO[0] <= t < VOCAL_SOLO[1]:
+        return vocal_names(t, f, s)
     if t >= VOCAL_BAND:
         # band in: the screen splits into three strips, all changing every 2 bars
         i = int((t - VOCAL_BAND) // 3.2)
@@ -303,6 +343,10 @@ def vocal_frame(t, f, s):
         title(c, "F IT UP", s)
         if 119.2 <= t < 120.6:
             text(c, "EVERYONE", ("center", 1040), 72)
+        if VOCAL_FBA[0] <= t < VOCAL_FBA[1]:
+            # as in the Louis Cole live-session reference at the band entry
+            shade(c, 930, 1150, 0.6, s)
+            text(c, "FULL BAND\nACTIVATED", ("center", 1040), 72, render.LYRIC_RED, glow=False)
         return c
     if VOCAL_FF[0] <= t < VOCAL_FF[1]:
         # fast-forward: pan across the stage as the band walks on
