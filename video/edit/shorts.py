@@ -255,11 +255,13 @@ def karaoke_frame(t, f, s):
 # ------------------------------------------------------------------ 4. vocal
 # song 1 continued: singing (0:49) -> band walks on (fast-forwarded) ->
 # "20 MINUTES LATER" -> band in. Segments: (source start, source end, speed).
-VOCAL = dict(edl=SONG1, t0=49.0, t1=121.0, segments=[
-    (49.0, 84.0, 1),
+# starts right on the first "YEAH" and runs to 60 s:
+# 6.8 + 21.6/4 + 2.0 + 45.7 = 59.9 s
+VOCAL = dict(edl=SONG1, t0=77.2, t1=153.5, fadein=0.03, segments=[
+    (77.2, 84.0, 1),
     (84.0, 105.6, 4),        # FF>> at 4x
     (105.6, 107.6, 1),       # black card, muted
-    (107.8, 121.0, 1),
+    (107.8, 153.5, 1),
 ])
 VOCAL_FF = (84.0, 105.6)
 VOCAL_CARD = (105.6, 107.6)
@@ -469,7 +471,7 @@ def main():
         parts.append(f + f"[a{i}]")
         labels.append(f"[a{i}]")
     fc = ";".join(parts) + ";" + "".join(labels) + f"concat=n={len(segments)}:v=0:a=1," \
-        f"afade=t=in:d=0.2,afade=t=out:st={dur - 0.6}:d=0.6[aout]"
+        f"afade=t=in:d={cfg.get('fadein', 0.2)},afade=t=out:st={dur - 0.6}:d=0.6[aout]"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", tmp, "-i", a.wide, "-filter_complex", fc,
                     "-map", "0:v", "-map", "[aout]", "-c:v", "copy", "-t", f"{dur:.3f}",
                     "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", a.out], check=True)
